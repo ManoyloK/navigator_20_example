@@ -21,6 +21,7 @@ class _BaseDialogState extends State<BaseDialog> {
               child: Material(
                   color: Colors.white,
                   child: Column(
+                    mainAxisSize: MainAxisSize.min,
                     children: [
                       Text('TItle'),
                       Text('Description'),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:navigator_example/custom_navigator/ui/home.dart';
 import 'package:navigator_example/custom_navigator/ui/main_screen.dart';
 import 'package:navigator_example/custom_navigator/ui/products.dart';
@@ -107,13 +108,41 @@ Page getPage(Pages page, {bool fullscreenDialog = false}) {
         restorationId: '/details2',
       );
     case Pages.dialog:
-      return MaterialPage(
-        child: BaseDialog(),
-        fullscreenDialog: fullscreenDialog,
+      return ModalBottomSheetDialog(
+        builder: (context) => BaseDialog(),
         key: ValueKey('/dialog'),
         name: '/dialog',
-        restorationId: '/dialog',
       );
       break;
+  }
+}
+
+class ModalBottomSheetDialog<T> extends Page<T> {
+  const ModalBottomSheetDialog({
+    @required this.builder,
+    String name,
+    Key key,
+  }) : super(key: key, name: name);
+  final WidgetBuilder builder;
+
+  @override
+  Route<T> createRoute(BuildContext context) {
+    return ModalBottomSheetRoute(
+      builder: builder,
+      settings: this,
+      expanded: false,
+    );
+  }
+
+  @override
+  int get hashCode => key.hashCode;
+
+  @override
+  bool operator ==(Object other) {
+    if (other is Page) {
+      return key == other.key;
+    } else {
+      return super == other;
+    }
   }
 }
