@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:navigator_example/custom_navigator/navigation/root_nav_host.dart';
 import 'package:navigator_example/custom_navigator/pages.dart';
-import 'package:navigator_example/custom_navigator/root_nav_host.dart';
 import 'package:navigator_example/custom_navigator/root_navigation_widget.dart';
 
 class MainScreen extends StatefulWidget {
@@ -49,7 +49,6 @@ class _MainScreenState extends State<MainScreen> {
       body: RootNavigationWidget(
         navHost: RootNavHost.of(context),
         roots: [Pages.home, Pages.products],
-        name: "main-page",
       ),
     );
   }

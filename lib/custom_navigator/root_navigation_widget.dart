@@ -2,25 +2,31 @@ import 'package:flutter/material.dart';
 import 'package:navigator_example/custom_navigator/pages.dart';
 import 'package:provider/provider.dart';
 
-import 'nested_nav_host.dart';
-import 'root_nav_host.dart';
+import 'navigation/nav_host.dart';
+import 'navigation/nested_nav_host.dart';
+import 'navigation/root_nav_host.dart';
 
+///
+/// Registers nested routes for current [navHost]
+///
 class RootNavigationWidget extends StatefulWidget {
   const RootNavigationWidget({
     Key key,
     this.roots = const [],
     this.navHost,
-    this.name,
   }) : super(key: key);
   final List<Pages> roots;
   final RootNavHost navHost;
-  final String name;
 
   @override
   _RootNavigationWidgetState createState() => _RootNavigationWidgetState();
 }
 
 class _RootNavigationWidgetState extends State<RootNavigationWidget> {
+  ///
+  /// Needed to point to the right [navHost] when new page pushes as global
+  /// navigation and root [navHost] updates
+  ///
   Page page;
 
   @override
@@ -28,16 +34,18 @@ class _RootNavigationWidgetState extends State<RootNavigationWidget> {
     super.initState();
     widget.roots.forEach(widget.navHost.registerNestedNavHost);
     page = widget.navHost.pages.last;
-
-    widget.navHost.addListener(() {
-      setState(() {});
-    });
   }
 
   @override
   Widget build(BuildContext context) {
     return Consumer<RootNavHost>(
       builder: (context, pageManager, child) {
+        ///
+        ///  Use [Stack] with [Offstage] instead of [IndexedStack] because
+        ///  [IndexedStack] keep tracking children semantics, so they are
+        ///  tappable even if they are not visible. [Offstage] creates only
+        ///  [Element] for widget
+        ///
         return Stack(
           children: [
             ...pageManager.pageNestedNavigationHosts[page].nestedNavigationHosts
@@ -66,16 +74,13 @@ class _OffstageNavigator extends StatefulWidget {
   final NavHost nestedNavHost;
 
   @override
-  __OffstageNavigatorState createState() => __OffstageNavigatorState();
+  _OffstageNavigatorState createState() => _OffstageNavigatorState();
 }
 
-class __OffstageNavigatorState extends State<_OffstageNavigator> {
+class _OffstageNavigatorState extends State<_OffstageNavigator> {
   @override
   void initState() {
     super.initState();
-    widget.navHost.addListener(() {
-      setState(() {});
-    });
   }
 
   @override

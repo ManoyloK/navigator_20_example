@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:navigator_example/custom_navigator/navigation/nav_host.dart';
+import 'package:navigator_example/custom_navigator/navigation/root_nav_host.dart';
 import 'package:navigator_example/custom_navigator/pages.dart';
-import 'package:navigator_example/custom_navigator/root_nav_host.dart';
 import 'package:provider/provider.dart';
 
 void main() {
@@ -75,7 +76,7 @@ class TheAppRouterDelegate extends RouterDelegate<Pages>
     if (!route.didPop(result)) return false;
 
     /// Notify the PageManager that page was popped
-    pageManager.didPop();
+    pageManager.pop();
 
     return true;
   }

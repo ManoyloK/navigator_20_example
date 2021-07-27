@@ -44,11 +44,25 @@ class _ProductsState extends State<Products>
             Container(
               color: Colors.purple,
               child: Center(
-                child: MaterialButton(
-                  child: Text('button'),
-                  onPressed: () {
-                    TheAppRouterDelegate.pageManager.push(Pages.details);
-                  },
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    MaterialButton(
+                      child: Text('button'),
+                      onPressed: () {
+                        TheAppRouterDelegate.pageManager.push(Pages.details);
+                      },
+                    ),
+                    MaterialButton(
+                      child: Text('dialog'),
+                      onPressed: () {
+                        TheAppRouterDelegate.pageManager.push(
+                          Pages.dialog,
+                          rootNavigator: true,
+                        );
+                      },
+                    ),
+                  ],
                 ),
               ),
             ),

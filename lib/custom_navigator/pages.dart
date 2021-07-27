@@ -4,6 +4,8 @@ import 'package:navigator_example/custom_navigator/ui/main_screen.dart';
 import 'package:navigator_example/custom_navigator/ui/products.dart';
 import 'package:navigator_example/custom_navigator/ui/root.dart';
 
+import 'navigation/base_dialog.dart';
+
 enum Pages {
   root,
   home,
@@ -11,9 +13,10 @@ enum Pages {
   details,
   details2,
   unknown,
+  dialog,
 }
 
-Page getPage(Pages page) {
+Page getPage(Pages page, {bool fullscreenDialog = false}) {
   switch (page) {
     case Pages.root:
       return MaterialPage(
@@ -67,7 +70,7 @@ Page getPage(Pages page) {
                         child: Text('back'),
                         color: Colors.cyan,
                         onPressed: () {
-                          TheAppRouterDelegate.pageManager.didPop();
+                          TheAppRouterDelegate.pageManager.pop();
                         }),
                   ],
                 );
@@ -92,7 +95,7 @@ Page getPage(Pages page) {
                       child: Text('back'),
                       color: Colors.cyan,
                       onPressed: () {
-                        TheAppRouterDelegate.pageManager.didPop();
+                        TheAppRouterDelegate.pageManager.pop();
                       }),
                 ],
               );
@@ -103,5 +106,14 @@ Page getPage(Pages page) {
         name: '/details2',
         restorationId: '/details2',
       );
+    case Pages.dialog:
+      return MaterialPage(
+        child: BaseDialog(),
+        fullscreenDialog: fullscreenDialog,
+        key: ValueKey('/dialog'),
+        name: '/dialog',
+        restorationId: '/dialog',
+      );
+      break;
   }
 }

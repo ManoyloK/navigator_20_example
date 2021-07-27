@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:navigator_example/custom_navigator/pages.dart';
 import 'package:provider/provider.dart';
 
-import 'nested_nav_host.dart';
-import 'root_nav_host.dart';
+import 'navigation/nav_host.dart';
+import 'navigation/nested_nav_host.dart';
 
 class NestedNavigationWidget extends StatefulWidget {
   const NestedNavigationWidget({
