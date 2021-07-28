@@ -13,12 +13,14 @@ void main() {
 
 class TheApp extends StatelessWidget {
   TheApp() {
+    ///
+    /// Needed to restore app state after it goes foreground
+    ///
     TheAppRouterDelegate.pageManager.push(Pages.root);
   }
 
   @override
   Widget build(BuildContext context) {
-    print('TheApp');
     return MaterialApp.router(
       title: 'Flutter Router Demo',
       debugShowCheckedModeBanner: false,
@@ -54,7 +56,6 @@ class TheAppRouterDelegate extends RouterDelegate<Pages>
   /// In the build method we need to return Navigator using [navigatorKey]
   @override
   Widget build(BuildContext context) {
-    print('TheAppRouterDelegate');
     return ChangeNotifierProvider<NavHost>.value(
       value: pageManager,
       child: ChangeNotifierProvider<RootNavHost>.value(
@@ -86,7 +87,7 @@ class TheAppRouterDelegate extends RouterDelegate<Pages>
 
   @override
   Future<void> setNewRoutePath(Pages configuration) async {
-    await pageManager.push(configuration);
+    pageManager.push(configuration);
   }
 }
 

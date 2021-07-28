@@ -16,11 +16,11 @@ class MainScreen extends StatelessWidget {
           children: [
             Text('Main Router Screen'),
             Gap(20),
-            OutlineButton(
-              child: Text('Open Details'),
+            MaterialButton(
               onPressed: () {
                 RoutePageManager.of(context).openDetails();
               },
+              child: Text('Open Details'),
             ),
           ],
         ),

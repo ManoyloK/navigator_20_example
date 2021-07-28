@@ -26,11 +26,12 @@ class _BaseDialogState extends State<BaseDialog> {
                       Text('TItle'),
                       Text('Description'),
                       MaterialButton(
-                          child: Text('back'),
-                          color: Colors.cyan,
-                          onPressed: () {
-                            RootNavHost.of(context).pop();
-                          }),
+                        color: Colors.cyan,
+                        onPressed: () {
+                          RootNavHost.of(context).pop();
+                        },
+                        child: Text('back'),
+                      ),
                     ],
                   )),
             ),

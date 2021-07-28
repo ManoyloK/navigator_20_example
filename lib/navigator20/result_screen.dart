@@ -23,12 +23,12 @@ class ResultScreen extends StatelessWidget {
               textAlign: TextAlign.center,
             ),
             Gap(20),
-            RaisedButton(
+            MaterialButton(
               onPressed: () => Navigator.pop(context, true),
               child: Text('Result with true via Navigator.pop'),
             ),
             Gap(20),
-            RaisedButton(
+            MaterialButton(
               onPressed: () => PageManager.of(context).returnWith(true),
               child: Text('Result with true via custom method'),
             ),

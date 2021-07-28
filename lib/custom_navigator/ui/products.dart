@@ -33,11 +33,12 @@ class _ProductsState extends State<Products>
               color: Colors.orange,
               child: Center(
                 child: MaterialButton(
-                  child: Text('button'),
+                  color: Colors.cyan,
                   onPressed: () {
                     TheAppRouterDelegate.pageManager
                         .push(Pages.details, rootNavigator: true);
                   },
+                  child: Text('Open details from root'),
                 ),
               ),
             ),
@@ -48,19 +49,21 @@ class _ProductsState extends State<Products>
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     MaterialButton(
-                      child: Text('button'),
+                      color: Colors.cyan,
                       onPressed: () {
                         TheAppRouterDelegate.pageManager.push(Pages.details);
                       },
+                      child: Text('Open details'),
                     ),
                     MaterialButton(
-                      child: Text('dialog'),
+                      color: Colors.cyan,
                       onPressed: () {
                         TheAppRouterDelegate.pageManager.push(
                           Pages.dialog,
                           rootNavigator: true,
                         );
                       },
+                      child: Text('Open dialog'),
                     ),
                   ],
                 ),

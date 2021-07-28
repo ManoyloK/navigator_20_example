@@ -121,7 +121,7 @@ class HomePage extends StatelessWidget {
         title: Text('HomePage'),
       ),
       body: Center(
-        child: FlatButton(
+        child: MaterialButton(
           onPressed: addTwoPages,
           child: Text('Add two more pages'),
         ),

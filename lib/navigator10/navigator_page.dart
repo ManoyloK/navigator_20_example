@@ -11,12 +11,12 @@ class Navigator10Screen extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          RaisedButton(
+          MaterialButton(
             onPressed: () => Navigator.of(context).push(DetailsScreen.route),
             child: Text('Open Details with 1.0'),
           ),
           Gap(10),
-          RaisedButton(
+          MaterialButton(
             onPressed: () {
               Navigator.of(context).push(OtherScreen.route);
               Navigator.of(context).push(DetailsScreen.route);

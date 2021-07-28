@@ -107,8 +107,8 @@ class HomePage extends StatelessWidget {
         title: Text('HomePage'),
       ),
       body: TextButton(
-        child: Text('Add page'),
         onPressed: onAddPage,
+        child: Text('Add page'),
       ),
     );
   }
@@ -140,8 +140,8 @@ class DetailsPage extends StatelessWidget {
             child: Text('Details Page'),
           ),
           TextButton(
-            child: Text('Add Inner Navigator'),
             onPressed: onAddPage,
+            child: Text('Add Inner Navigator'),
           )
         ],
       ),
@@ -161,7 +161,7 @@ class SecondLevelPage extends StatelessWidget {
         backgroundColor: Colors.red,
       ),
       body: Center(
-        child: FlatButton(
+        child: MaterialButton(
           onPressed: goToThirdLevel,
           child: Text('Go to 3rd.'),
         ),
@@ -204,11 +204,11 @@ class _ThirdLevelPageState extends State<ThirdLevelPage> {
       body: Center(
         child: Column(
           children: [
-            RaisedButton(
+            MaterialButton(
               onPressed: widget.removeHomePage,
               child: Text('Remove Home Page'),
             ),
-            RaisedButton(
+            MaterialButton(
               onPressed: widget.removeSecondLevel,
               child: Text('Remove Second Level Page'),
             ),
@@ -289,8 +289,8 @@ class InnerHomePage extends StatelessWidget {
         title: Text('Inner Home Page'),
       ),
       body: TextButton(
-        child: Text('Add page'),
         onPressed: onAddPage,
+        child: Text('Add page'),
       ),
     );
   }

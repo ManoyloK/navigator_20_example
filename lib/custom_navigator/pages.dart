@@ -42,15 +42,7 @@ Page getPage(Pages page, {bool fullscreenDialog = false}) {
         restorationId: '/products',
       );
       break;
-    case Pages.unknown:
-      return MaterialPage(
-        child: Container(
-          color: Colors.amber,
-        ),
-        key: ValueKey('/unknown'),
-        name: '/unknown',
-        restorationId: '/unknown',
-      );
+
     case Pages.details:
       return MaterialPage(
         child: Scaffold(
@@ -61,18 +53,20 @@ Page getPage(Pages page, {bool fullscreenDialog = false}) {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     MaterialButton(
-                        child: Text('button'),
-                        color: Colors.cyan,
-                        onPressed: () {
-                          TheAppRouterDelegate.pageManager
-                              .push(Pages.details2, rootNavigator: true);
-                        }),
+                      color: Colors.cyan,
+                      onPressed: () {
+                        TheAppRouterDelegate.pageManager
+                            .push(Pages.details2, rootNavigator: true);
+                      },
+                      child: Text('Open details from root'),
+                    ),
                     MaterialButton(
-                        child: Text('back'),
-                        color: Colors.cyan,
-                        onPressed: () {
-                          TheAppRouterDelegate.pageManager.pop();
-                        }),
+                      color: Colors.cyan,
+                      onPressed: () {
+                        TheAppRouterDelegate.pageManager.pop();
+                      },
+                      child: Text('back'),
+                    ),
                   ],
                 );
               },
@@ -93,11 +87,12 @@ Page getPage(Pages page, {bool fullscreenDialog = false}) {
                 children: [
                   Text('Details'),
                   MaterialButton(
-                      child: Text('back'),
-                      color: Colors.cyan,
-                      onPressed: () {
-                        TheAppRouterDelegate.pageManager.pop();
-                      }),
+                    color: Colors.cyan,
+                    onPressed: () {
+                      TheAppRouterDelegate.pageManager.pop();
+                    },
+                    child: Text('back'),
+                  ),
                 ],
               );
             },
@@ -114,6 +109,16 @@ Page getPage(Pages page, {bool fullscreenDialog = false}) {
         name: '/dialog',
       );
       break;
+
+    default:
+      return MaterialPage(
+        child: Container(
+          color: Colors.amber,
+        ),
+        key: ValueKey('/unknown'),
+        name: '/unknown',
+        restorationId: '/unknown',
+      );
   }
 }
 

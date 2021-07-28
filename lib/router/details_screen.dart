@@ -22,25 +22,25 @@ class DetailsScreen extends StatelessWidget {
               style: Theme.of(context).textTheme.headline3,
             ),
             Gap(20),
-            OutlineButton(
-              child: Text('Open Details'),
+            MaterialButton(
               onPressed: () {
                 RoutePageManager.of(context).openDetails();
               },
+              child: Text('Open Details'),
             ),
             Gap(20),
-            OutlineButton(
-              child: Text('Reset to home'),
+            MaterialButton(
               onPressed: () {
                 RoutePageManager.of(context).resetToHome();
               },
+              child: Text('Reset to home'),
             ),
             Gap(20),
-            OutlineButton(
-              child: Text('Add new Details below'),
+            MaterialButton(
               onPressed: () {
                 RoutePageManager.of(context).addDetailsBelow();
               },
+              child: Text('Add new Details below'),
             ),
           ],
         ),

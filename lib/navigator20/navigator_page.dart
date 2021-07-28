@@ -16,12 +16,12 @@ class _Navigator20ScreenState extends State<Navigator20Screen> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          RaisedButton(
+          MaterialButton(
             onPressed: () => PageManager.of(context).openDetails(),
             child: Text('Open Details with 2.0'),
           ),
           Gap(10),
-          RaisedButton(
+          MaterialButton(
             onPressed: () => PageManager.of(context).pushTwoPages(),
             child: Text('Push two pages to stack with 2.0'),
           ),
@@ -32,7 +32,7 @@ class _Navigator20ScreenState extends State<Navigator20Screen> {
             style: TextStyle(fontStyle: FontStyle.italic),
           ),
           Gap(10),
-          RaisedButton(
+          MaterialButton(
             onPressed: () async {
               setState(() {
                 this.result = null;

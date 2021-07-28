@@ -21,12 +21,12 @@ class DetailsScreen extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            RaisedButton(
+            MaterialButton(
               onPressed: () => PageManager.of(context).addOtherPageBeneath(),
               child: Text('Add Other Screen beneath with 2.0'),
             ),
             Gap(20),
-            RaisedButton(
+            MaterialButton(
               onPressed: () => PageManager.of(context).makeRootPage(),
               child: Text('Make this page a root page with 2.0'),
             ),
@@ -38,14 +38,14 @@ class DetailsScreen extends StatelessWidget {
                 }
                 return SizedBox();
               },
-              child: RaisedButton(
+              child: MaterialButton(
                 onPressed: () => PageManager.of(context)
                     .addOtherPageBeneath(child: MainScreen()),
                 child: Text('Put MainPage again under this one 😅'),
               ),
             ),
             Gap(20),
-            RaisedButton(
+            MaterialButton(
               onPressed: () =>
                   PageManager.of(context).replaceTopWith(OtherScreen()),
               child: Text('Replace this page with Other Screen with 2.0'),

@@ -13,11 +13,12 @@ class HomeScreen extends StatelessWidget {
           children: [
             Text('Home Router Screen'),
             SizedBox(height: 20),
-            OutlineButton(
-              child: Text('Open Details'),
+            MaterialButton(
+              color: Colors.cyan,
               onPressed: () {
                 //RoutePageManager.of(context).openDetails();
               },
+              child: Text('Open Details'),
             ),
           ],
         ),
