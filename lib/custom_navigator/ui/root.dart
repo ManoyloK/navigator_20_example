@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:navigator_example/custom_navigator/navigation/deep_link_pacer.dart';
 import 'package:navigator_example/custom_navigator/navigation/nav_host.dart';
+import 'package:navigator_example/custom_navigator/navigation/page_configuration.dart';
 import 'package:navigator_example/custom_navigator/navigation/root_nav_host.dart';
 import 'package:navigator_example/custom_navigator/pages.dart';
 import 'package:provider/provider.dart';
+import 'package:uni_links/uni_links.dart';
 
 void main() {
   TheAppRouterDelegate.pageManager = RootNavHost(
@@ -11,14 +14,20 @@ void main() {
   runApp(TheApp());
 }
 
-class TheApp extends StatelessWidget {
+class TheApp extends StatefulWidget {
   TheApp() {
     ///
     /// Needed to restore app state after it goes foreground
     ///
-    TheAppRouterDelegate.pageManager.push(Pages.root);
+    TheAppRouterDelegate.pageManager
+        .push(PageConfiguration(uiPage: Pages.root));
   }
 
+  @override
+  _TheAppState createState() => _TheAppState();
+}
+
+class _TheAppState extends State<TheApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(
@@ -43,16 +52,24 @@ class TheApp extends StatelessWidget {
 /// to rebuild. It also act as a builder for the [Router] widget and builds a
 /// navigating widget, typically a [Navigator], when the [Router] widget
 /// builds.
-class TheAppRouterDelegate extends RouterDelegate<Pages>
-    with ChangeNotifier, PopNavigatorRouterDelegateMixin<Pages> {
+class TheAppRouterDelegate extends RouterDelegate<PageConfiguration>
+    with ChangeNotifier, PopNavigatorRouterDelegateMixin<PageConfiguration> {
   TheAppRouterDelegate() {
     // This part is important because we pass the notification
     // from RoutePageManager to RouterDelegate. This way our navigation
     // changes (e.g. pushes) will be reflected in the address bar
     pageManager.addListener(notifyListeners);
+    uriLinkStream.listen((Uri? uri) {
+      if (uri != null) {
+        final pages = DeepLinkParser().parse(uri);
+        pages.forEach((element) => pageManager.push(element));
+      }
+    }, onError: (Object err) {
+      print('Got error $err');
+    });
   }
 
-  static late NavHost pageManager;
+  static late RootNavHost pageManager;
 
   /// In the build method we need to return Navigator using [navigatorKey]
   @override
@@ -61,7 +78,7 @@ class TheAppRouterDelegate extends RouterDelegate<Pages>
     return ChangeNotifierProvider<NavHost>.value(
       value: pageManager,
       child: ChangeNotifierProvider<RootNavHost>.value(
-        value: pageManager as RootNavHost,
+        value: pageManager,
         child: Consumer<NavHost>(
           builder: (context, pageManager, child) {
             return Navigator(
@@ -90,54 +107,56 @@ class TheAppRouterDelegate extends RouterDelegate<Pages>
   GlobalKey<NavigatorState> get navigatorKey => pageManager.navigatorKey;
 
   @override
-  Future<void> setNewRoutePath(Pages configuration) async {
+  Future<void> setNewRoutePath(PageConfiguration configuration) async {
     pageManager.push(configuration);
   }
 }
 
-Pages parseRoute(Uri uri) {
+PageConfiguration parseRoute(Uri uri) {
   // Handle '/'
   if (uri.path == '/root') {
-    return Pages.root;
+    return PageConfiguration(uiPage: Pages.root);
   } else if (uri.path == '/home') {
-    return Pages.home;
+    return PageConfiguration(uiPage: Pages.home);
   } else if (uri.path == '/products') {
-    return Pages.products;
+    return PageConfiguration(uiPage: Pages.about);
   } else if (uri.path == '/unknown') {
-    return Pages.unknown;
+    return PageConfiguration(uiPage: Pages.unknown);
   } else if (uri.path == '/details') {
-    return Pages.details;
+    return PageConfiguration(uiPage: Pages.details);
   }
 
   // Handle unknown routes
-  return Pages.root;
+  return PageConfiguration(uiPage: Pages.root);
 }
 
 /// Parser inspired by https://github.com/acoutts/flutter_nav_2.0_mobx/blob/master/lib/main.dart
 ///
 /// Using typed information instead of string allows for greater flexibility
-class TheAppRouteInformationParser extends RouteInformationParser<Pages> {
+class TheAppRouteInformationParser
+    extends RouteInformationParser<PageConfiguration> {
   @override
-  Future<Pages> parseRouteInformation(RouteInformation routeInformation) async {
+  Future<PageConfiguration> parseRouteInformation(
+      RouteInformation routeInformation) async {
     final uri = Uri.parse(routeInformation.location!);
     return parseRoute(uri);
   }
 
   @override
-  RouteInformation? restoreRouteInformation(Pages path) {
-    if (path == Pages.root) {
+  RouteInformation? restoreRouteInformation(PageConfiguration path) {
+    if (path.uiPage == Pages.root) {
       return RouteInformation(location: '/root');
     }
-    if (path == Pages.home) {
+    if (path.uiPage == Pages.home) {
       return RouteInformation(location: '/home');
     }
-    if (path == Pages.products) {
+    if (path.uiPage == Pages.about) {
       return RouteInformation(location: '/products');
     }
-    if (path == Pages.unknown) {
+    if (path.uiPage == Pages.unknown) {
       return RouteInformation(location: '/unknown');
     }
-    if (path == Pages.details) {
+    if (path.uiPage == Pages.details) {
       return RouteInformation(location: '/details');
     }
     return null;

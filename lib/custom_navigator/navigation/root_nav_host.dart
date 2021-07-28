@@ -4,10 +4,11 @@ import 'package:navigator_example/custom_navigator/pages.dart';
 import 'package:provider/provider.dart';
 
 import 'nav_host.dart';
+import 'page_configuration.dart';
 
 class RootNavHost extends NavHost {
   RootNavHost({
-    Pages? rootPage,
+    required Pages rootPage,
   }) : super(rootPage: rootPage);
 
   static RootNavHost of(BuildContext context) {
@@ -54,26 +55,37 @@ class RootNavHost extends NavHost {
     notifyListeners();
   }
 
-  @override
-  void push(
+  void pushPage(
     Pages page, {
     bool rootNavigator = false,
     bool fullscreenDialog = false,
   }) {
+    push(
+      PageConfiguration(uiPage: page),
+      rootNavigator: rootNavigator,
+      fullscreenDialog: fullscreenDialog,
+    );
+  }
+
+  @override
+  void push(
+    PageConfiguration pageConfig, {
+    bool rootNavigator = false,
+    bool fullscreenDialog = false,
+  }) {
     print('push');
-    if (page == rootPage && currentPages.isNotEmpty) {
+    if (pageConfig.uiPage == rootPage && currentPages.isNotEmpty) {
       return;
     }
 
     var navigationState = _pageNestedNavigationHosts[currentPages.last];
     if (!rootNavigator && navigationState!.nestedNavHost != null) {
-      if (navigationState.isRoot(page)) {
-        navigationState.nestedHost = page;
-      } else {
-        navigationState.nestedNavHost!.push(page);
+      if (navigationState.isRoot(pageConfig.uiPage)) {
+        navigationState.nestedHost = pageConfig.uiPage;
       }
+      navigationState.nestedNavHost!.push(pageConfig);
     } else {
-      var newPage = getPage(page, fullscreenDialog: fullscreenDialog);
+      var newPage = getPage(pageConfig, fullscreenDialog: fullscreenDialog);
       if (newPage.name != currentPages.last.name) {
         currentPages.add(newPage);
       }

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:navigator_example/custom_navigator/navigation/root_nav_host.dart';
+import 'package:navigator_example/custom_navigator/pages.dart';
 
 class HomeScreen extends StatelessWidget {
   @override
@@ -16,7 +18,7 @@ class HomeScreen extends StatelessWidget {
             MaterialButton(
               color: Colors.cyan,
               onPressed: () {
-                //RoutePageManager.of(context).openDetails();
+                RootNavHost.of(context).pushPage(Pages.details);
               },
               child: Text('Open Details'),
             ),

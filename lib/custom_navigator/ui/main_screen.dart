@@ -18,9 +18,9 @@ class _MainScreenState extends State<MainScreen> {
     setState(() {
       _index = index;
       if (_index == 0) {
-        RootNavHost.of(context).push(Pages.home);
+        RootNavHost.of(context).pushPage(Pages.home);
       } else {
-        RootNavHost.of(context).push(Pages.products);
+        RootNavHost.of(context).pushPage(Pages.about);
       }
     });
   }
@@ -32,16 +32,12 @@ class _MainScreenState extends State<MainScreen> {
         bottomNavigationBar: BottomNavigationBar(
           items: [
             BottomNavigationBarItem(
-              label: 'Navigator 2.0',
+              label: 'Home',
               icon: Icon(CupertinoIcons.square_stack_3d_up),
             ),
             BottomNavigationBarItem(
-              label: 'Navigator',
-              icon: Icon(CupertinoIcons.perspective),
-            ),
-            BottomNavigationBarItem(
               label: 'About',
-              icon: Icon(CupertinoIcons.star_slash),
+              icon: Icon(CupertinoIcons.perspective),
             ),
           ],
           onTap: _setPage,
@@ -49,7 +45,7 @@ class _MainScreenState extends State<MainScreen> {
         ),
         body: RootNavigationWidget(
           navHost: RootNavHost.of(context),
-          roots: [Pages.home, Pages.products],
+          roots: [Pages.home, Pages.about],
         ),
       ),
     );

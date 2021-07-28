@@ -15,6 +15,7 @@ dependencies:
   gap: 2.0.0
   provider: 5.0.0
   modal_bottom_sheet: 2.0.0
+  uni_links: 0.5.1
 
 dev_dependencies:
   pedantic: 1.11.1

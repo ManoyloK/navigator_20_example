@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:navigator_example/custom_navigator/navigation/page_configuration.dart';
 import 'package:navigator_example/custom_navigator/pages.dart';
 import 'package:provider/provider.dart';
 
@@ -6,7 +7,7 @@ import 'nav_host.dart';
 
 class NestedNavHost extends NavHost {
   NestedNavHost({
-    Pages? rootPage,
+    required Pages rootPage,
   }) : super(
           rootPage: rootPage,
         );
@@ -47,26 +48,49 @@ class NestedNavHost extends NavHost {
     notifyListeners();
   }
 
-  @override
-  void push(Pages page, {
+  void pushPage(
+    Pages page, {
     bool rootNavigator = false,
     bool fullscreenDialog = false,
   }) {
-    if (page == rootPage) return;
+    push(
+      PageConfiguration(uiPage: page),
+      rootNavigator: rootNavigator,
+      fullscreenDialog: fullscreenDialog,
+    );
+  }
 
-    var navigationHost = _nestedNavigationHosts[page];
+  @override
+  void push(
+    PageConfiguration pageConfig, {
+    bool rootNavigator = false,
+    bool fullscreenDialog = false,
+  }) {
+    if (pageConfig.uiPage != rootPage) {
+      var navigationHost = _nestedNavigationHosts[pageConfig.uiPage];
 
-    ///
-    /// We use [page] as key for [_nestedNavigationHosts],
-    /// so navigationHost == null means that [page] is not root page
-    if (navigationHost == null && _nestedHost != null) {
-      _nestedNavigationHosts[_nestedHost!]!.push(page);
-    } else {
-      var newPage = getPage(page);
-      if (newPage.name != currentPages.last.name) {
-        currentPages.add(newPage);
+      ///
+      /// We use [page] as key for [_nestedNavigationHosts],
+      /// so navigationHost == null means that [page] is not root page
+      if (navigationHost == null && _nestedHost != null) {
+        _nestedNavigationHosts[_nestedHost!]!.push(pageConfig);
+      } else {
+        _addNewPage(pageConfig);
       }
+    } else {
+      _addNewPage(pageConfig);
     }
     notifyListeners();
+  }
+
+  void _addNewPage(PageConfiguration pageConfig) {
+    var newPage = getPage(pageConfig);
+    final pageIndex =
+        currentPages.indexWhere((element) => element.name == newPage.name);
+    if (pageIndex >= 0) {
+      currentPages.removeRange(pageIndex, currentPages.length);
+    }
+
+    currentPages.add(newPage);
   }
 }

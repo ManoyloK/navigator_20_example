@@ -2,12 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:navigator_example/custom_navigator/pages.dart';
 import 'package:provider/provider.dart';
 
+import 'page_configuration.dart';
+
 abstract class NavHost extends ChangeNotifier {
   NavHost({
-    this.rootPage,
+    required this.rootPage,
     GlobalKey<NavigatorState>? navigatorKey,
   })  : currentPages = [
-          getPage(rootPage),
+          getPage(PageConfiguration(uiPage: rootPage)),
         ],
         _navigatorKey = navigatorKey ??
             GlobalKey<NavigatorState>(
@@ -20,7 +22,7 @@ abstract class NavHost extends ChangeNotifier {
 
   @protected
   final List<Page> currentPages;
-  final Pages? rootPage;
+  final Pages rootPage;
   final _navigatorKey;
 
   ///
@@ -47,7 +49,7 @@ abstract class NavHost extends ChangeNotifier {
   void pop();
 
   void push(
-    Pages page, {
+    PageConfiguration page, {
     bool rootNavigator = false,
     bool fullscreenDialog = false,
   });

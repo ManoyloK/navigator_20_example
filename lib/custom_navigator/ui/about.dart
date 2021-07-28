@@ -2,21 +2,34 @@ import 'package:flutter/material.dart';
 import 'package:navigator_example/custom_navigator/pages.dart';
 import 'package:navigator_example/custom_navigator/ui/root.dart';
 
-class Products extends StatefulWidget {
-  const Products({Key? key}) : super(key: key);
+class About extends StatefulWidget {
+  const About({
+    this.tabIndex = 0,
+    Key? key,
+  }) : super(key: key);
+  final int tabIndex;
 
   @override
-  _ProductsState createState() => _ProductsState();
+  _AboutState createState() => _AboutState();
 }
 
-class _ProductsState extends State<Products>
-    with SingleTickerProviderStateMixin {
+class _AboutState extends State<About> with SingleTickerProviderStateMixin {
   TabController? _tabController;
 
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(vsync: this, length: 3);
+    _tabController = TabController(
+      vsync: this,
+      length: 3,
+      initialIndex: widget.tabIndex,
+    );
+  }
+
+  @override
+  void didUpdateWidget(covariant About oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    _tabController!.animateTo(widget.tabIndex);
   }
 
   @override
@@ -41,7 +54,7 @@ class _ProductsState extends State<Products>
                       color: Colors.cyan,
                       onPressed: () {
                         TheAppRouterDelegate.pageManager
-                            .push(Pages.details, rootNavigator: true);
+                            .pushPage(Pages.details, rootNavigator: true);
                       },
                       child: Text('Open details from root'),
                     ),
@@ -59,14 +72,15 @@ class _ProductsState extends State<Products>
                     MaterialButton(
                       color: Colors.cyan,
                       onPressed: () {
-                        TheAppRouterDelegate.pageManager.push(Pages.details);
+                        TheAppRouterDelegate.pageManager
+                            .pushPage(Pages.details);
                       },
                       child: Text('Open details'),
                     ),
                     MaterialButton(
                       color: Colors.cyan,
                       onPressed: () {
-                        TheAppRouterDelegate.pageManager.push(
+                        TheAppRouterDelegate.pageManager.pushPage(
                           Pages.dialog,
                           rootNavigator: true,
                         );

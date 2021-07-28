@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
+import 'package:navigator_example/custom_navigator/navigation/page_configuration.dart';
+import 'package:navigator_example/custom_navigator/ui/about.dart';
 import 'package:navigator_example/custom_navigator/ui/home.dart';
 import 'package:navigator_example/custom_navigator/ui/main_screen.dart';
-import 'package:navigator_example/custom_navigator/ui/products.dart';
 import 'package:navigator_example/custom_navigator/ui/root.dart';
 
 import 'ui/base_dialog.dart';
@@ -10,15 +11,15 @@ import 'ui/base_dialog.dart';
 enum Pages {
   root,
   home,
-  products,
+  about,
   details,
   details2,
   unknown,
   dialog,
 }
 
-Page getPage(Pages? page, {bool fullscreenDialog = false}) {
-  switch (page) {
+Page getPage(PageConfiguration pageConfig, {bool fullscreenDialog = false}) {
+  switch (pageConfig.uiPage) {
     case Pages.root:
       return MaterialPage(
         child: MainScreen(),
@@ -33,12 +34,15 @@ Page getPage(Pages? page, {bool fullscreenDialog = false}) {
         name: '/home',
         restorationId: '/home',
       );
-    case Pages.products:
+    case Pages.about:
+      var tabIndex = pageConfig.settings as int? ?? 0;
       return MaterialPage(
-        child: Products(),
-        key: PageStorageKey('/products'),
-        name: '/products',
-        restorationId: '/products',
+        child: About(
+          tabIndex: tabIndex,
+        ),
+        key: ValueKey('/about'),
+        name: '/about',
+        restorationId: '/about',
       );
     case Pages.details:
       return MaterialPage(
@@ -53,7 +57,7 @@ Page getPage(Pages? page, {bool fullscreenDialog = false}) {
                       color: Colors.cyan,
                       onPressed: () {
                         TheAppRouterDelegate.pageManager
-                            .push(Pages.details2, rootNavigator: true);
+                            .pushPage(Pages.details2, rootNavigator: true);
                       },
                       child: Text('Open details from root'),
                     ),
