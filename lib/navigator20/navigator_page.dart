@@ -8,7 +8,7 @@ class Navigator20Screen extends StatefulWidget {
 }
 
 class _Navigator20ScreenState extends State<Navigator20Screen> {
-  bool result;
+  bool? result;
 
   @override
   Widget build(BuildContext context) {

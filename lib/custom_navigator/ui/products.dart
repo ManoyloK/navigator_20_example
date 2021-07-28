@@ -3,7 +3,7 @@ import 'package:navigator_example/custom_navigator/pages.dart';
 import 'package:navigator_example/custom_navigator/ui/root.dart';
 
 class Products extends StatefulWidget {
-  const Products({Key key}) : super(key: key);
+  const Products({Key? key}) : super(key: key);
 
   @override
   _ProductsState createState() => _ProductsState();
@@ -11,7 +11,7 @@ class Products extends StatefulWidget {
 
 class _ProductsState extends State<Products>
     with SingleTickerProviderStateMixin {
-  TabController _tabController;
+  TabController? _tabController;
 
   @override
   void initState() {
@@ -28,17 +28,24 @@ class _ProductsState extends State<Products>
           children: [
             Container(
               color: Colors.cyan,
+              child: Center(child: Text('Tab A')),
             ),
             Container(
               color: Colors.orange,
               child: Center(
-                child: MaterialButton(
-                  color: Colors.cyan,
-                  onPressed: () {
-                    TheAppRouterDelegate.pageManager
-                        .push(Pages.details, rootNavigator: true);
-                  },
-                  child: Text('Open details from root'),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text('Tab B'),
+                    MaterialButton(
+                      color: Colors.cyan,
+                      onPressed: () {
+                        TheAppRouterDelegate.pageManager
+                            .push(Pages.details, rootNavigator: true);
+                      },
+                      child: Text('Open details from root'),
+                    ),
+                  ],
                 ),
               ),
             ),
@@ -48,6 +55,7 @@ class _ProductsState extends State<Products>
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
+                    Text('Tab C'),
                     MaterialButton(
                       color: Colors.cyan,
                       onPressed: () {
@@ -73,7 +81,7 @@ class _ProductsState extends State<Products>
         ),
         TabBar(
           onTap: (index) {
-            _tabController.animateTo(index);
+            _tabController!.animateTo(index);
           },
           labelPadding: const EdgeInsets.fromLTRB(16.0, 4.0, 16.0, 0.0),
           indicator: const BoxDecoration(),

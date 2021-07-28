@@ -5,11 +5,14 @@ import 'package:provider/provider.dart';
 abstract class NavHost extends ChangeNotifier {
   NavHost({
     this.rootPage,
-    GlobalKey<NavigatorState> navigatorKey,
+    GlobalKey<NavigatorState>? navigatorKey,
   })  : currentPages = [
           getPage(rootPage),
         ],
-        _navigatorKey = navigatorKey ?? GlobalKey<NavigatorState>();
+        _navigatorKey = navigatorKey ??
+            GlobalKey<NavigatorState>(
+              debugLabel: rootPage.toString(),
+            );
 
   static NavHost of(BuildContext context) {
     return Provider.of<NavHost>(context, listen: false);
@@ -17,7 +20,7 @@ abstract class NavHost extends ChangeNotifier {
 
   @protected
   final List<Page> currentPages;
-  final Pages rootPage;
+  final Pages? rootPage;
   final _navigatorKey;
 
   ///
@@ -35,7 +38,7 @@ abstract class NavHost extends ChangeNotifier {
   /// Currently selected navigation host, responsible for which one of
   /// [nestedNavigationHosts] currently active active
   ///
-  NavHost get nestedNavHost;
+  NavHost? get nestedNavHost;
 
   GlobalKey<NavigatorState> get navigatorKey => _navigatorKey;
 

@@ -69,7 +69,7 @@ class TheAppRouterDelegate extends RouterDelegate<TheAppPath>
     }
 
     /// Notify the PageManager that page was popped
-    pageManager.didPop(route.settings);
+    pageManager.didPop(route.settings as Page<dynamic>);
 
     return true;
   }
@@ -98,13 +98,13 @@ class RoutePageManager extends ChangeNotifier {
   final List<Page> _pages = [
     MaterialPage(
       child: MainScreen(),
-      key: const Key('MainScreen'),
+      key: const Key('MainScreen') as LocalKey?,
       name: '/',
     ),
   ];
 
   TheAppPath get currentPath {
-    return parseRoute(Uri.parse(_pages.last.name));
+    return parseRoute(Uri.parse(_pages.last.name!));
   }
 
   void didPop(Page page) {
@@ -189,12 +189,12 @@ class TheAppRouteInformationParser extends RouteInformationParser<TheAppPath> {
   @override
   Future<TheAppPath> parseRouteInformation(
       RouteInformation routeInformation) async {
-    final uri = Uri.parse(routeInformation.location);
+    final uri = Uri.parse(routeInformation.location!);
     return parseRoute(uri);
   }
 
   @override
-  RouteInformation restoreRouteInformation(TheAppPath path) {
+  RouteInformation? restoreRouteInformation(TheAppPath path) {
     if (path.isUnknown) {
       return RouteInformation(location: '/404');
     }
@@ -211,7 +211,7 @@ class TheAppRouteInformationParser extends RouteInformationParser<TheAppPath> {
 /// Class responsible for storing typed information about
 /// the current navigation path in the app
 class TheAppPath {
-  final int id;
+  final int? id;
 
   TheAppPath.home() : id = null;
 

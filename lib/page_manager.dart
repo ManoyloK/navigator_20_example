@@ -5,8 +5,8 @@ import 'package:navigator_example/screens/other_screen.dart';
 import 'package:provider/provider.dart';
 
 import 'custom_page.dart';
-import 'navigator20/details_screen.dart';
 import 'main_screen.dart';
+import 'navigator20/details_screen.dart';
 import 'navigator20/result_screen.dart';
 
 class PageManager extends ChangeNotifier {
@@ -17,19 +17,20 @@ class PageManager extends ChangeNotifier {
   final List<Page> _pages = [
     MaterialPage(
       child: MainScreen(),
-      key: Key('MainPage'),
+      key: Key('MainPage') as LocalKey?,
       name: 'MainScreen',
     ),
   ];
 
   final _navigatorKey = GlobalKey<NavigatorState>();
+
   GlobalKey<NavigatorState> get navigatorKey => _navigatorKey;
 
   /// This completer is used to handle returning values
   /// from [ResultablePage]. In this case it's a single
   /// completer field because we assume that only 1 page
   /// in the entire lifetime of the app can return a value.
-  Completer<bool> _boolResultCompleter;
+  Completer<bool>? _boolResultCompleter;
 
   static PageManager of(BuildContext context) {
     return Provider.of<PageManager>(context, listen: false);
@@ -39,7 +40,7 @@ class PageManager extends ChangeNotifier {
     _pages.add(
       MaterialPage(
         child: DetailsScreen(),
-        key: DetailsScreen.pageKey,
+        key: DetailsScreen.pageKey as LocalKey?,
         name: 'DetailsScreen',
       ),
     );
@@ -60,12 +61,12 @@ class PageManager extends ChangeNotifier {
     _pages.add(
       ResultablePage(
         child: ResultScreen(),
-        key: ResultScreen.pageKey,
+        key: ResultScreen.pageKey as LocalKey?,
         name: 'ResultScreen',
       ),
     );
     notifyListeners();
-    return _boolResultCompleter.future;
+    return _boolResultCompleter!.future;
   }
 
   /// This is custom method to pass returning value
@@ -74,12 +75,12 @@ class PageManager extends ChangeNotifier {
   void returnWith(bool value) {
     if (_boolResultCompleter != null) {
       _pages.removeLast();
-      _boolResultCompleter.complete(value);
+      _boolResultCompleter!.complete(value);
       notifyListeners();
     }
   }
 
-  void addOtherPageBeneath({Widget child}) {
+  void addOtherPageBeneath({Widget? child}) {
     final inserted = child != null
         ? MaterialPage(
             child: child,
@@ -88,7 +89,7 @@ class PageManager extends ChangeNotifier {
           )
         : MaterialPage(
             child: OtherScreen(),
-            key: Key('OtherPage${_pages.length - 1}'),
+            key: Key('OtherPage${_pages.length - 1}') as LocalKey?,
             name: 'OtherScreen',
           );
     _pages.insert(
@@ -142,7 +143,7 @@ class PageManager extends ChangeNotifier {
 
   void _setResult(dynamic result) {
     if (result is bool && _boolResultCompleter != null) {
-      _boolResultCompleter.complete(result);
+      _boolResultCompleter!.complete(result);
     }
     if (result == null) {
       print('Result was null');
@@ -167,9 +168,9 @@ class PageManager extends ChangeNotifier {
 /// MaterialPage that is expected to return a result
 class ResultablePage extends MaterialPage {
   const ResultablePage({
-    @required Widget child,
-    LocalKey key,
-    String name,
+    required Widget child,
+    LocalKey? key,
+    String? name,
   }) : super(
           key: key,
           name: name,

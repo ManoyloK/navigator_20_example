@@ -6,7 +6,7 @@ import 'navigator20/navigator_page.dart';
 import 'screens/about_screen.dart';
 
 class MainScreen extends StatefulWidget {
-  const MainScreen({Key key}) : super(key: key);
+  const MainScreen({Key? key}) : super(key: key);
 
   @override
   _MainScreenState createState() => _MainScreenState();

@@ -30,6 +30,7 @@ class TheApp extends StatelessWidget {
       ),
       routerDelegate: TheAppRouterDelegate(),
       routeInformationParser: TheAppRouteInformationParser(),
+      restorationScopeId: 'router',
     );
   }
 }
@@ -51,21 +52,24 @@ class TheAppRouterDelegate extends RouterDelegate<Pages>
     pageManager.addListener(notifyListeners);
   }
 
-  static NavHost pageManager;
+  static late NavHost pageManager;
 
   /// In the build method we need to return Navigator using [navigatorKey]
   @override
   Widget build(BuildContext context) {
+    print('TheAppRouterDelegate');
     return ChangeNotifierProvider<NavHost>.value(
       value: pageManager,
       child: ChangeNotifierProvider<RootNavHost>.value(
-        value: pageManager,
+        value: pageManager as RootNavHost,
         child: Consumer<NavHost>(
           builder: (context, pageManager, child) {
             return Navigator(
               key: navigatorKey,
+              reportsRouteUpdateToEngine: true,
               onPopPage: _onPopPage,
               pages: List.of(pageManager.pages),
+              restorationScopeId: 'root',
             );
           },
         ),
@@ -115,12 +119,12 @@ Pages parseRoute(Uri uri) {
 class TheAppRouteInformationParser extends RouteInformationParser<Pages> {
   @override
   Future<Pages> parseRouteInformation(RouteInformation routeInformation) async {
-    final uri = Uri.parse(routeInformation.location);
+    final uri = Uri.parse(routeInformation.location!);
     return parseRoute(uri);
   }
 
   @override
-  RouteInformation restoreRouteInformation(Pages path) {
+  RouteInformation? restoreRouteInformation(Pages path) {
     if (path == Pages.root) {
       return RouteInformation(location: '/root');
     }

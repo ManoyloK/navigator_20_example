@@ -6,7 +6,7 @@ import 'package:navigator_example/screens/other_screen.dart';
 import 'package:provider/provider.dart';
 
 class DetailsScreen extends StatelessWidget {
-  const DetailsScreen({Key key}) : super(key: key);
+  const DetailsScreen({Key? key}) : super(key: key);
 
   static const pageKey = Key('DetailsPage');
 
@@ -34,7 +34,7 @@ class DetailsScreen extends StatelessWidget {
             Consumer<PageManager>(
               builder: (context, value, child) {
                 if (value.isRootPage(pageKey)) {
-                  return child;
+                  return child!;
                 }
                 return SizedBox();
               },

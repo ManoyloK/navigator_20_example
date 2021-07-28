@@ -4,8 +4,8 @@ import 'package:gap/gap.dart';
 import '../main_router.dart';
 
 class DetailsScreen extends StatelessWidget {
-  const DetailsScreen({Key key, this.id}) : super(key: key);
-  final int id;
+  const DetailsScreen({Key? key, this.id}) : super(key: key);
+  final int? id;
 
   @override
   Widget build(BuildContext context) {

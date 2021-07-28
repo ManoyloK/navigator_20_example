@@ -6,8 +6,7 @@ import 'nav_host.dart';
 
 class NestedNavHost extends NavHost {
   NestedNavHost({
-    Pages rootPage,
-    GlobalKey<NavigatorState> navigatorKey,
+    Pages? rootPage,
   }) : super(
           rootPage: rootPage,
         );
@@ -16,7 +15,7 @@ class NestedNavHost extends NavHost {
     return Provider.of<NestedNavHost>(context, listen: false);
   }
 
-  Pages _nestedHost;
+  Pages? _nestedHost;
 
   final Map<Pages, NestedNavHost> _nestedNavigationHosts = {};
 
@@ -25,7 +24,7 @@ class NestedNavHost extends NavHost {
       _nestedNavigationHosts.values.toList();
 
   @override
-  NestedNavHost get nestedNavHost => _nestedNavigationHosts[_nestedHost];
+  NestedNavHost? get nestedNavHost => _nestedNavigationHosts[_nestedHost!];
 
   @override
   void registerNestedNavHost(Pages rootPage) {
@@ -36,8 +35,8 @@ class NestedNavHost extends NavHost {
   @override
   void pop() {
     if (_nestedHost != null) {
-      if (nestedNavHost.pages.length > 1) {
-        nestedNavHost.pop();
+      if (nestedNavHost!.pages.length > 1) {
+        nestedNavHost!.pop();
       } else {
         _nestedNavigationHosts.remove(_nestedHost);
         _nestedHost = _nestedNavigationHosts.keys.last;
@@ -61,7 +60,7 @@ class NestedNavHost extends NavHost {
     /// We use [page] as key for [_nestedNavigationHosts],
     /// so navigationHost == null means that [page] is not root page
     if (navigationHost == null && _nestedHost != null) {
-      _nestedNavigationHosts[_nestedHost].push(page);
+      _nestedNavigationHosts[_nestedHost!]!.push(page);
     } else {
       var newPage = getPage(page);
       if (newPage.name != currentPages.last.name) {

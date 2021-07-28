@@ -5,10 +5,10 @@ class CustomTransitionDelegate extends DefaultTransitionDelegate {
 
   @override
   Iterable<RouteTransitionRecord> resolve({
-    List<RouteTransitionRecord> newPageRouteHistory,
-    Map<RouteTransitionRecord, RouteTransitionRecord>
+    required List<RouteTransitionRecord> newPageRouteHistory,
+    required Map<RouteTransitionRecord?, RouteTransitionRecord>
         locationToExitingPageRoute,
-    Map<RouteTransitionRecord, List<RouteTransitionRecord>>
+    required Map<RouteTransitionRecord?, List<RouteTransitionRecord>>
         pageRouteToPagelessRoutes,
   }) {
     final results = super.resolve(

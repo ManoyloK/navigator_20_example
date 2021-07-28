@@ -11,9 +11,9 @@ import 'navigation/root_nav_host.dart';
 ///
 class RootNavigationWidget extends StatefulWidget {
   const RootNavigationWidget({
-    Key key,
+    Key? key,
     this.roots = const [],
-    this.navHost,
+    required this.navHost,
   }) : super(key: key);
   final List<Pages> roots;
   final RootNavHost navHost;
@@ -27,7 +27,7 @@ class _RootNavigationWidgetState extends State<RootNavigationWidget> {
   /// Needed to point to the right [navHost] when new page pushes as global
   /// navigation and root [navHost] updates
   ///
-  Page page;
+  Page? page;
 
   @override
   void initState() {
@@ -48,12 +48,13 @@ class _RootNavigationWidgetState extends State<RootNavigationWidget> {
         ///
         return Stack(
           children: [
-            ...pageManager.pageNestedNavigationHosts[page].nestedNavigationHosts
+            ...pageManager
+                .pageNestedNavigationHosts[page!]!.nestedNavigationHosts
                 .map((navHost) {
               return _OffstageNavigator(
                 navHost: navHost,
-                nestedNavHost:
-                    pageManager.pageNestedNavigationHosts[page].nestedNavHost,
+                nestedNavHost: pageManager
+                    .pageNestedNavigationHosts[page!]!.nestedNavHost!,
               );
             })
           ],
@@ -63,36 +64,26 @@ class _RootNavigationWidgetState extends State<RootNavigationWidget> {
   }
 }
 
-class _OffstageNavigator extends StatefulWidget {
+class _OffstageNavigator extends StatelessWidget {
   const _OffstageNavigator({
-    Key key,
-    @required this.navHost,
-    @required this.nestedNavHost,
+    Key? key,
+    required this.navHost,
+    required this.nestedNavHost,
   }) : super(key: key);
 
   final NavHost navHost;
   final NavHost nestedNavHost;
 
   @override
-  _OffstageNavigatorState createState() => _OffstageNavigatorState();
-}
-
-class _OffstageNavigatorState extends State<_OffstageNavigator> {
-  @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Offstage(
-      key: ValueKey(widget.navHost.rootPage),
-      offstage: !(widget.nestedNavHost == widget.navHost),
+      key: ValueKey(navHost.rootPage),
+      offstage: nestedNavHost != navHost,
       child: ChangeNotifierProvider<NestedNavHost>.value(
-        value: widget.navHost,
+        value: navHost as NestedNavHost,
         child: Navigator(
-          key: widget.navHost.navigatorKey,
-          pages: List.of(widget.navHost.pages),
+          key: navHost.navigatorKey,
+          pages: navHost.pages,
         ),
       ),
     );

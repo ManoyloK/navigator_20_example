@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:navigator_example/screens/other_screen.dart';
 
 class DetailsScreen extends StatelessWidget {
-  const DetailsScreen({Key key}) : super(key: key);
+  const DetailsScreen({Key? key}) : super(key: key);
 
   static Route get route => MaterialPageRoute(builder: (_) => DetailsScreen());
 
@@ -49,8 +49,8 @@ class DetailsScreen extends StatelessWidget {
 
 class CustomPageBuilder extends PageRoute with MaterialRouteTransitionMixin {
   CustomPageBuilder({
-    @required MaterialPage page,
-    RouteSettings settings,
+    required MaterialPage page,
+    RouteSettings? settings,
     bool fullscreenDialog = false,
   })  : _page = page,
         super(

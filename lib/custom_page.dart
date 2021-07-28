@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 
 class CustomPage<T> extends Page<T> {
   const CustomPage({
-    @required this.builder,
-    String name,
-    Key key,
-  }) : super(key: key, name: name);
+    required this.builder,
+    String? name,
+    Key? key,
+  }) : super(key: key as LocalKey?, name: name);
   final WidgetBuilder builder;
 
   @override

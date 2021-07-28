@@ -3,7 +3,7 @@ import 'package:gap/gap.dart';
 import 'package:navigator_example/page_manager.dart';
 
 class ResultScreen extends StatelessWidget {
-  const ResultScreen({Key key}) : super(key: key);
+  const ResultScreen({Key? key}) : super(key: key);
 
   static const pageKey = Key('ResultScreen');
 

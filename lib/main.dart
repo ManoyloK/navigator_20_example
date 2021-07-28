@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'transition_delegates/custom_transition_delegate.dart';
 import 'page_manager.dart';
+import 'transition_delegates/custom_transition_delegate.dart';
 
 void main() {
   final pageManager = PageManager();
@@ -38,7 +38,7 @@ class TheApp extends StatelessWidget {
 
 class _NavStateLabel extends StatelessWidget {
   const _NavStateLabel({
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   @override
@@ -76,7 +76,7 @@ class MainNavigatorPage extends StatelessWidget {
         // and provided to Navigator widget
         return WillPopScope(
           onWillPop: () async =>
-              !await pageManager.navigatorKey.currentState.maybePop(),
+              !await pageManager.navigatorKey.currentState!.maybePop(),
           child: Navigator(
             key: pageManager.navigatorKey,
             pages: pageManager.pages,
@@ -98,7 +98,7 @@ class MainNavigatorPage extends StatelessWidget {
   /// to properly clean up `pages` list if a page has been popped.
   bool _onPopPage(
       Route<dynamic> route, dynamic result, PageManager pageManager) {
-    pageManager.didPop(route.settings, result);
+    pageManager.didPop(route.settings as Page<dynamic>, result);
     return route.didPop(result);
   }
 }

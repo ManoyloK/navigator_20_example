@@ -3,10 +3,10 @@ import 'package:navigator_example/custom_navigator/pages.dart';
 import 'nested_nav_host.dart';
 
 class PageNestedNavigationState {
-  Pages nestedHost;
+  Pages? nestedHost;
   final Map<Pages, NestedNavHost> _nestedNavigationHosts = {};
 
-  NestedNavHost get nestedNavHost => _nestedNavigationHosts[nestedHost];
+  NestedNavHost? get nestedNavHost => _nestedNavigationHosts[nestedHost];
 
   List<NestedNavHost> get nestedNavigationHosts =>
       _nestedNavigationHosts.values.toList();

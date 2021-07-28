@@ -7,8 +7,7 @@ import 'nav_host.dart';
 
 class RootNavHost extends NavHost {
   RootNavHost({
-    Pages rootPage,
-    GlobalKey<NavigatorState> navigatorKey,
+    Pages? rootPage,
   }) : super(rootPage: rootPage);
 
   static RootNavHost of(BuildContext context) {
@@ -27,7 +26,7 @@ class RootNavHost extends NavHost {
       _pageNestedNavigationHosts;
 
   @override
-  NavHost get nestedNavHost =>
+  NavHost? get nestedNavHost =>
       _pageNestedNavigationHosts[currentPages.last]?.nestedNavHost;
 
   @override
@@ -41,14 +40,14 @@ class RootNavHost extends NavHost {
       _pageNestedNavigationHosts[currentPages.last] =
           PageNestedNavigationState();
     }
-    _pageNestedNavigationHosts[currentPages.last]
+    _pageNestedNavigationHosts[currentPages.last]!
         .registerNestedNavHost(rootPage);
   }
 
   @override
-  void pop({Page page}) {
-    if (nestedNavHost != null && nestedNavHost.pages.length > 1) {
-      nestedNavHost.pop();
+  void pop({Page? page}) {
+    if (nestedNavHost != null && nestedNavHost!.pages.length > 1) {
+      nestedNavHost!.pop();
     } else {
       if (currentPages.length > 1) currentPages.removeLast();
     }
@@ -61,16 +60,17 @@ class RootNavHost extends NavHost {
     bool rootNavigator = false,
     bool fullscreenDialog = false,
   }) {
-    if (page == rootPage) {
+    print('push');
+    if (page == rootPage && currentPages.isNotEmpty) {
       return;
     }
 
     var navigationState = _pageNestedNavigationHosts[currentPages.last];
-    if (!rootNavigator && navigationState.nestedNavHost != null) {
+    if (!rootNavigator && navigationState!.nestedNavHost != null) {
       if (navigationState.isRoot(page)) {
         navigationState.nestedHost = page;
       } else {
-        navigationState.nestedNavHost.push(page);
+        navigationState.nestedNavHost!.push(page);
       }
     } else {
       var newPage = getPage(page, fullscreenDialog: fullscreenDialog);

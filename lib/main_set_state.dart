@@ -32,7 +32,7 @@ class _TheAppState extends State<TheApp> {
             setState(() {});
           },
         ),
-        key: const Key('HomePage'),
+        key: const Key('HomePage') as LocalKey?,
       ),
     );
   }
@@ -55,7 +55,7 @@ class _TheAppState extends State<TheApp> {
       //   );
       // },
       home: WillPopScope(
-        onWillPop: () async => !await _navigatorKey.currentState.maybePop(),
+        onWillPop: () async => !await _navigatorKey.currentState!.maybePop(),
         child: Navigator(
           key: _navigatorKey,
           pages: List.of(pages),
@@ -96,9 +96,9 @@ class _TheAppState extends State<TheApp> {
 }
 
 class HomePage extends StatelessWidget {
-  const HomePage({Key key, this.onAddPage}) : super(key: key);
+  const HomePage({Key? key, this.onAddPage}) : super(key: key);
 
-  final VoidCallback onAddPage;
+  final VoidCallback? onAddPage;
 
   @override
   Widget build(BuildContext context) {
@@ -115,17 +115,17 @@ class HomePage extends StatelessWidget {
 }
 
 class DetailsPage extends StatelessWidget {
-  static Page page({VoidCallback onAddPage}) => MaterialPage(
+  static Page page({VoidCallback? onAddPage}) => MaterialPage(
         child: DetailsPage(onAddPage: onAddPage),
-        key: const Key('DetailsPage'),
+        key: const Key('DetailsPage') as LocalKey?,
       );
 
   const DetailsPage({
-    Key key,
+    Key? key,
     this.onAddPage,
   }) : super(key: key);
 
-  final VoidCallback onAddPage;
+  final VoidCallback? onAddPage;
 
   @override
   Widget build(BuildContext context) {
@@ -150,8 +150,8 @@ class DetailsPage extends StatelessWidget {
 }
 
 class SecondLevelPage extends StatelessWidget {
-  const SecondLevelPage({Key key, this.goToThirdLevel}) : super(key: key);
-  final VoidCallback goToThirdLevel;
+  const SecondLevelPage({Key? key, this.goToThirdLevel}) : super(key: key);
+  final VoidCallback? goToThirdLevel;
 
   @override
   Widget build(BuildContext context) {
@@ -172,13 +172,13 @@ class SecondLevelPage extends StatelessWidget {
 
 class ThirdLevelPage extends StatefulWidget {
   const ThirdLevelPage({
-    Key key,
+    Key? key,
     this.removeHomePage,
     this.removeSecondLevel,
   }) : super(key: key);
 
-  final VoidCallback removeHomePage;
-  final VoidCallback removeSecondLevel;
+  final VoidCallback? removeHomePage;
+  final VoidCallback? removeSecondLevel;
 
   @override
   _ThirdLevelPageState createState() => _ThirdLevelPageState();
@@ -225,7 +225,7 @@ class _ThirdLevelPageState extends State<ThirdLevelPage> {
 
 class InnerApp extends StatefulWidget {
   static Page page() =>
-      MaterialPage(child: InnerApp(), key: const Key('InnerApp'));
+      MaterialPage(child: InnerApp(), key: const Key('InnerApp') as LocalKey?);
 
   @override
   _InnerAppState createState() => _InnerAppState();
@@ -245,13 +245,13 @@ class _InnerAppState extends State<InnerApp> {
             pages.add(
               MaterialPage(
                 child: InnerDetailsPage(),
-                key: const Key('InnerDetailsPage'),
+                key: const Key('InnerDetailsPage') as LocalKey?,
               ),
             );
             setState(() {});
           },
         ),
-        key: const Key('InnerHomePage'),
+        key: const Key('InnerHomePage') as LocalKey?,
       ),
     );
   }
@@ -259,7 +259,7 @@ class _InnerAppState extends State<InnerApp> {
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
-      onWillPop: () async => !await _navigatorKey.currentState.maybePop(),
+      onWillPop: () async => !await _navigatorKey.currentState!.maybePop(),
       child: Navigator(
         key: _navigatorKey,
         pages: List.of(pages),
@@ -278,9 +278,9 @@ class _InnerAppState extends State<InnerApp> {
 }
 
 class InnerHomePage extends StatelessWidget {
-  const InnerHomePage({Key key, this.onAddPage}) : super(key: key);
+  const InnerHomePage({Key? key, this.onAddPage}) : super(key: key);
 
-  final VoidCallback onAddPage;
+  final VoidCallback? onAddPage;
 
   @override
   Widget build(BuildContext context) {
@@ -298,7 +298,7 @@ class InnerHomePage extends StatelessWidget {
 
 class InnerDetailsPage extends StatelessWidget {
   const InnerDetailsPage({
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   @override

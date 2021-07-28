@@ -5,7 +5,7 @@ import 'package:navigator_example/custom_navigator/ui/main_screen.dart';
 import 'package:navigator_example/custom_navigator/ui/products.dart';
 import 'package:navigator_example/custom_navigator/ui/root.dart';
 
-import 'navigation/base_dialog.dart';
+import 'ui/base_dialog.dart';
 
 enum Pages {
   root,
@@ -17,7 +17,7 @@ enum Pages {
   dialog,
 }
 
-Page getPage(Pages page, {bool fullscreenDialog = false}) {
+Page getPage(Pages? page, {bool fullscreenDialog = false}) {
   switch (page) {
     case Pages.root:
       return MaterialPage(
@@ -26,7 +26,6 @@ Page getPage(Pages page, {bool fullscreenDialog = false}) {
         name: '/root',
         restorationId: '/root',
       );
-
     case Pages.home:
       return MaterialPage(
         child: HomeScreen(),
@@ -41,8 +40,6 @@ Page getPage(Pages page, {bool fullscreenDialog = false}) {
         name: '/products',
         restorationId: '/products',
       );
-      break;
-
     case Pages.details:
       return MaterialPage(
         child: Scaffold(
@@ -108,8 +105,6 @@ Page getPage(Pages page, {bool fullscreenDialog = false}) {
         key: ValueKey('/dialog'),
         name: '/dialog',
       );
-      break;
-
     default:
       return MaterialPage(
         child: Container(
@@ -124,10 +119,10 @@ Page getPage(Pages page, {bool fullscreenDialog = false}) {
 
 class ModalBottomSheetDialog<T> extends Page<T> {
   const ModalBottomSheetDialog({
-    @required this.builder,
-    String name,
-    Key key,
-  }) : super(key: key, name: name);
+    required this.builder,
+    String? name,
+    Key? key,
+  }) : super(key: key as LocalKey?, name: name);
   final WidgetBuilder builder;
 
   @override

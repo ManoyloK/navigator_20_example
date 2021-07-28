@@ -82,10 +82,10 @@ class _TheAppState extends State<TheApp> {
 class MyCustomPage<T> extends Page<T> {
   /// {@macro myCustomPage}
   const MyCustomPage({
-    @required this.builder,
-    String name,
-    Key key,
-  }) : super(key: key, name: name);
+    required this.builder,
+    String? name,
+    Key? key,
+  }) : super(key: key as LocalKey?, name: name);
   final WidgetBuilder builder;
 
   @override
@@ -110,9 +110,9 @@ class MyCustomPage<T> extends Page<T> {
 }
 
 class HomePage extends StatelessWidget {
-  const HomePage({Key key, this.addTwoPages}) : super(key: key);
+  const HomePage({Key? key, this.addTwoPages}) : super(key: key);
 
-  final VoidCallback addTwoPages;
+  final VoidCallback? addTwoPages;
 
   @override
   Widget build(BuildContext context) {
@@ -131,7 +131,7 @@ class HomePage extends StatelessWidget {
 }
 
 class SecondLevelPage extends StatelessWidget {
-  const SecondLevelPage({Key key}) : super(key: key);
+  const SecondLevelPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -146,7 +146,7 @@ class SecondLevelPage extends StatelessWidget {
 
 class ThirdLevelPage extends StatefulWidget {
   const ThirdLevelPage({
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   @override
