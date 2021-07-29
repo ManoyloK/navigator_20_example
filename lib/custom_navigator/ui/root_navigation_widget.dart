@@ -82,14 +82,14 @@ class _OffstageNavigator extends StatelessWidget {
           key: navHost.navigatorKey,
           pages: navHost.pages,
           onPopPage: _onPopPage,
+          restorationScopeId: navHost.rootPage.toString(),
         ),
       ),
     );
   }
 
   bool _onPopPage(Route<dynamic> route, dynamic result) {
-    print('Root onPopPage was called!');
-
-    return true;
+    print('Nested onPopPage was called!');
+    return route.didPop(result);
   }
 }
