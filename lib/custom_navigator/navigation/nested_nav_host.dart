@@ -53,6 +53,7 @@ class NestedNavHost extends NavHost {
     PageConfiguration pageConfig, {
     bool rootNavigator = false,
     bool fullscreenDialog = false,
+    bool replace = false,
   }) {
     if (pageConfig.uiPage != rootPage) {
       var navigationHost = _nestedNavigationHosts[pageConfig.uiPage];
@@ -63,22 +64,30 @@ class NestedNavHost extends NavHost {
       if (navigationHost == null && _nestedHost != null) {
         _nestedNavigationHosts[_nestedHost!]!.push(pageConfig);
       } else {
-        _addNewPage(pageConfig);
+        _addNewPage(pageConfig: pageConfig, replace: replace);
       }
     } else {
-      _addNewPage(pageConfig);
+      _addNewPage(pageConfig: pageConfig, replace: replace);
     }
     notifyListeners();
   }
 
-  void _addNewPage(PageConfiguration pageConfig) {
+  void _addNewPage({
+    required PageConfiguration pageConfig,
+    bool replace = false,
+  }) {
     var newPage = getPage(pageConfig);
-    final pageIndex =
-        currentPages.indexWhere((element) => element.name == newPage.name);
-    if (pageIndex >= 0) {
-      currentPages.removeRange(pageIndex, currentPages.length);
-    }
 
-    currentPages.add(newPage);
+    if (replace) {
+      final pageIndex =
+          currentPages.indexWhere((element) => element.name == newPage.name);
+      if (pageIndex >= 0) {
+        currentPages.removeRange(pageIndex, currentPages.length);
+      }
+
+      currentPages.add(newPage);
+    } else if (!currentPages.any((element) => element.name == newPage.name)) {
+      currentPages.add(newPage);
+    }
   }
 }

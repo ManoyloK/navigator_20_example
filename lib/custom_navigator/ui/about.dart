@@ -4,10 +4,10 @@ import 'package:navigator_example/custom_navigator/navigation/router_delegate.da
 
 class About extends StatefulWidget {
   const About({
-    this.tabIndex = 0,
+    this.tabIndex,
     Key? key,
   }) : super(key: key);
-  final int tabIndex;
+  final int? tabIndex;
 
   @override
   _AboutState createState() => _AboutState();
@@ -22,14 +22,16 @@ class _AboutState extends State<About> with SingleTickerProviderStateMixin {
     _tabController = TabController(
       vsync: this,
       length: 3,
-      initialIndex: widget.tabIndex,
+      initialIndex: widget.tabIndex ?? 0,
     );
   }
 
   @override
   void didUpdateWidget(covariant About oldWidget) {
     super.didUpdateWidget(oldWidget);
-    _tabController!.animateTo(widget.tabIndex);
+    if (widget.tabIndex != null) {
+      _tabController!.animateTo(widget.tabIndex!);
+    }
   }
 
   @override

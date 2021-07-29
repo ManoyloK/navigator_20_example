@@ -60,6 +60,7 @@ class RootNavHost extends NavHost {
     PageConfiguration pageConfig, {
     bool rootNavigator = false,
     bool fullscreenDialog = false,
+    bool replace = false,
   }) {
     print('push');
     if (pageConfig.uiPage == rootPage && currentPages.isNotEmpty) {
@@ -68,7 +69,7 @@ class RootNavHost extends NavHost {
 
     var navigationState = _pageNestedNavigationHosts[currentPages.last];
     if (!rootNavigator && navigationState!.nestedNavHost != null) {
-      navigationState.push(pageConfig);
+      navigationState.push(pageConfig, replace: replace);
     } else {
       var newPage = getPage(pageConfig, fullscreenDialog: fullscreenDialog);
       if (newPage.name != currentPages.last.name) {

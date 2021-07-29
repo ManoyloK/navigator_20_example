@@ -19,10 +19,13 @@ class PageNestedNavigationState {
 
   bool isRoot(Pages page) => _nestedNavigationHosts.keys.contains(page);
 
-  void push(PageConfiguration pageConfig) {
+  void push(
+    PageConfiguration pageConfig, {
+    bool replace = false,
+  }) {
     if (isRoot(pageConfig.uiPage)) {
       nestedHost = pageConfig.uiPage;
     }
-    nestedNavHost!.push(pageConfig);
+    nestedNavHost!.push(pageConfig, replace: replace);
   }
 }

@@ -73,7 +73,10 @@ class TheAppRouterDelegate extends RouterDelegate<PageConfiguration>
   void _parseDeepLink(Uri? uri) {
     if (uri != null) {
       final pages = DeepLinkParser.parse(uri);
-      pages.forEach((element) => pageManager.push(element));
+      pages.forEach((element) => pageManager.push(
+            element,
+            replace: true,
+          ));
     }
   }
 }

@@ -52,6 +52,7 @@ abstract class NavHost extends ChangeNotifier {
     PageConfiguration page, {
     bool rootNavigator = false,
     bool fullscreenDialog = false,
+    bool replace = false,
   });
 
   void pushPage(

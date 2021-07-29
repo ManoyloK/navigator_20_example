@@ -28,7 +28,7 @@ class _TheAppState extends State<TheApp> {
       ),
       routerDelegate: TheAppRouterDelegate(),
       routeInformationParser: TheAppRouteInformationParser(),
-      restorationScopeId: 'router',
+      restorationScopeId: 'app',
     );
   }
 }
