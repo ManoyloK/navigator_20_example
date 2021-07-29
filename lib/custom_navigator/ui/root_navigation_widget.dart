@@ -48,13 +48,10 @@ class _RootNavigationWidgetState extends State<RootNavigationWidget> {
         ///
         return Stack(
           children: [
-            ...pageManager
-                .pageNestedNavigationHosts[page!]!.nestedNavigationHosts
-                .map((navHost) {
+            ...pageManager.pageNestedNavigationHosts[page!]!.nestedNavigationHosts.map((navHost) {
               return _OffstageNavigator(
                 navHost: navHost,
-                nestedNavHost: pageManager
-                    .pageNestedNavigationHosts[page!]!.nestedNavHost!,
+                nestedNavHost: pageManager.pageNestedNavigationHosts[page!]!.nestedNavHost!,
               );
             })
           ],
@@ -84,8 +81,15 @@ class _OffstageNavigator extends StatelessWidget {
         child: Navigator(
           key: navHost.navigatorKey,
           pages: navHost.pages,
+          onPopPage: _onPopPage,
         ),
       ),
     );
+  }
+
+  bool _onPopPage(Route<dynamic> route, dynamic result) {
+    print('Root onPopPage was called!');
+
+    return true;
   }
 }
