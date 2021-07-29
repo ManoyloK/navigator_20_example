@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:navigator_example/custom_navigator/pages.dart';
+import 'package:navigator_example/custom_navigator/navigation/pages.dart';
 import 'package:provider/provider.dart';
 
-import 'navigation/nav_host.dart';
-import 'navigation/nested_nav_host.dart';
-import 'navigation/root_nav_host.dart';
+import '../navigation/nav_host.dart';
+import '../navigation/nested_nav_host.dart';
+import '../navigation/root_nav_host.dart';
 
 ///
 /// Registers nested routes for current [navHost]

@@ -4,9 +4,9 @@ import 'package:navigator_example/custom_navigator/navigation/page_configuration
 import 'package:navigator_example/custom_navigator/ui/about.dart';
 import 'package:navigator_example/custom_navigator/ui/home.dart';
 import 'package:navigator_example/custom_navigator/ui/main_screen.dart';
-import 'package:navigator_example/custom_navigator/ui/root.dart';
 
-import 'ui/base_dialog.dart';
+import '../ui/base_dialog.dart';
+import 'router_delegate.dart';
 
 enum Pages {
   root,

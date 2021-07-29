@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:navigator_example/custom_navigator/navigation/page_nested_navigation_state.dart';
-import 'package:navigator_example/custom_navigator/pages.dart';
+import 'package:navigator_example/custom_navigator/navigation/pages.dart';
 import 'package:provider/provider.dart';
 
 import 'nav_host.dart';
@@ -46,25 +46,13 @@ class RootNavHost extends NavHost {
   }
 
   @override
-  void pop({Page? page}) {
+  void pop() {
     if (nestedNavHost != null && nestedNavHost!.pages.length > 1) {
       nestedNavHost!.pop();
     } else {
       if (currentPages.length > 1) currentPages.removeLast();
     }
     notifyListeners();
-  }
-
-  void pushPage(
-    Pages page, {
-    bool rootNavigator = false,
-    bool fullscreenDialog = false,
-  }) {
-    push(
-      PageConfiguration(uiPage: page),
-      rootNavigator: rootNavigator,
-      fullscreenDialog: fullscreenDialog,
-    );
   }
 
   @override
@@ -80,10 +68,7 @@ class RootNavHost extends NavHost {
 
     var navigationState = _pageNestedNavigationHosts[currentPages.last];
     if (!rootNavigator && navigationState!.nestedNavHost != null) {
-      if (navigationState.isRoot(pageConfig.uiPage)) {
-        navigationState.nestedHost = pageConfig.uiPage;
-      }
-      navigationState.nestedNavHost!.push(pageConfig);
+      navigationState.push(pageConfig);
     } else {
       var newPage = getPage(pageConfig, fullscreenDialog: fullscreenDialog);
       if (newPage.name != currentPages.last.name) {

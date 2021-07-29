@@ -1,4 +1,4 @@
-import 'package:navigator_example/custom_navigator/pages.dart';
+import 'package:navigator_example/custom_navigator/navigation/pages.dart';
 
 class PageConfiguration {
   PageConfiguration({

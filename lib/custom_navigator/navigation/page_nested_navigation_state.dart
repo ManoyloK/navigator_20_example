@@ -1,4 +1,5 @@
-import 'package:navigator_example/custom_navigator/pages.dart';
+import 'package:navigator_example/custom_navigator/navigation/page_configuration.dart';
+import 'package:navigator_example/custom_navigator/navigation/pages.dart';
 
 import 'nested_nav_host.dart';
 
@@ -17,4 +18,11 @@ class PageNestedNavigationState {
   }
 
   bool isRoot(Pages page) => _nestedNavigationHosts.keys.contains(page);
+
+  void push(PageConfiguration pageConfig) {
+    if (isRoot(pageConfig.uiPage)) {
+      nestedHost = pageConfig.uiPage;
+    }
+    nestedNavHost!.push(pageConfig);
+  }
 }

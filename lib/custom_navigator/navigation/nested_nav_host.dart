@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:navigator_example/custom_navigator/navigation/page_configuration.dart';
-import 'package:navigator_example/custom_navigator/pages.dart';
+import 'package:navigator_example/custom_navigator/navigation/pages.dart';
 import 'package:provider/provider.dart';
 
 import 'nav_host.dart';
@@ -46,18 +46,6 @@ class NestedNavHost extends NavHost {
       currentPages.removeLast();
     }
     notifyListeners();
-  }
-
-  void pushPage(
-    Pages page, {
-    bool rootNavigator = false,
-    bool fullscreenDialog = false,
-  }) {
-    push(
-      PageConfiguration(uiPage: page),
-      rootNavigator: rootNavigator,
-      fullscreenDialog: fullscreenDialog,
-    );
   }
 
   @override

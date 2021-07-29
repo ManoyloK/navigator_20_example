@@ -1,9 +1,9 @@
-import 'package:navigator_example/custom_navigator/pages.dart';
+import 'package:navigator_example/custom_navigator/navigation/pages.dart';
 
 import 'page_configuration.dart';
 
 class DeepLinkParser {
-  List<PageConfiguration> parse(Uri uri) {
+  static List<PageConfiguration> parse(Uri uri) {
     if (uri.pathSegments.isEmpty) {
       return [PageConfiguration(uiPage: Pages.root)];
     }

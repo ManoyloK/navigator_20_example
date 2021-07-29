@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:navigator_example/custom_navigator/pages.dart';
-import 'package:navigator_example/custom_navigator/ui/root.dart';
+import 'package:navigator_example/custom_navigator/navigation/pages.dart';
+import 'package:navigator_example/custom_navigator/navigation/router_delegate.dart';
 
 class About extends StatefulWidget {
   const About({

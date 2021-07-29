@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:navigator_example/custom_navigator/navigation/pages.dart';
 import 'package:navigator_example/custom_navigator/navigation/root_nav_host.dart';
-import 'package:navigator_example/custom_navigator/pages.dart';
-import 'package:navigator_example/custom_navigator/root_navigation_widget.dart';
+import 'package:navigator_example/custom_navigator/ui/root_navigation_widget.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({Key? key}) : super(key: key);

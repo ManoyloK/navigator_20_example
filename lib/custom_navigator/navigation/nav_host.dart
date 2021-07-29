@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:navigator_example/custom_navigator/pages.dart';
+import 'package:navigator_example/custom_navigator/navigation/pages.dart';
 import 'package:provider/provider.dart';
 
 import 'page_configuration.dart';
@@ -53,4 +53,16 @@ abstract class NavHost extends ChangeNotifier {
     bool rootNavigator = false,
     bool fullscreenDialog = false,
   });
+
+  void pushPage(
+    Pages page, {
+    bool rootNavigator = false,
+    bool fullscreenDialog = false,
+  }) {
+    push(
+      PageConfiguration(uiPage: page),
+      rootNavigator: rootNavigator,
+      fullscreenDialog: fullscreenDialog,
+    );
+  }
 }

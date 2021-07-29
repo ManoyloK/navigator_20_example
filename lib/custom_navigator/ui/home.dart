@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:navigator_example/custom_navigator/navigation/pages.dart';
 import 'package:navigator_example/custom_navigator/navigation/root_nav_host.dart';
-import 'package:navigator_example/custom_navigator/pages.dart';
 
 class HomeScreen extends StatelessWidget {
   @override
