@@ -90,6 +90,7 @@ class _OffstageNavigator extends StatelessWidget {
 
   bool _onPopPage(Route<dynamic> route, dynamic result) {
     print('Nested onPopPage was called!');
+    navHost.pop(result: result);
     return route.didPop(result);
   }
 }

@@ -9,7 +9,7 @@ class TheApp extends StatefulWidget {
     ///
     /// Needed to restore app state after it goes foreground
     ///
-    TheAppRouterDelegate.pageManager.push(PageConfiguration(uiPage: Pages.root));
+    TheAppRouterDelegate.pageManager.navigate(PageConfiguration(uiPage: Pages.root));
   }
 
   @override

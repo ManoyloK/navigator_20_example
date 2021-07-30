@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:navigator_example/custom_navigator/navigation/page_configuration.dart';
 import 'package:navigator_example/custom_navigator/navigation/pages.dart';
@@ -34,7 +36,7 @@ class NestedNavHost extends NavHost {
   }
 
   @override
-  void pop() {
+  void pop({Object? result}) {
     if (_nestedHost != null) {
       if (nestedNavHost!.pages.length > 1) {
         nestedNavHost!.pop();
@@ -43,18 +45,19 @@ class NestedNavHost extends NavHost {
         _nestedHost = _nestedNavigationHosts.keys.last;
       }
     } else {
-      currentPages.removeLast();
+      final page = currentPages.removeLast();
+      resultCompleters.remove(page)?.complete(result);
     }
     notifyListeners();
   }
 
   @override
-  void push(
+  Future<T?> navigateForResult<T>(
     PageConfiguration pageConfig, {
     bool rootNavigator = false,
     bool fullscreenDialog = false,
     bool replace = false,
-  }) {
+  }) async {
     if (pageConfig.uiPage != rootPage) {
       var navigationHost = _nestedNavigationHosts[pageConfig.uiPage];
 
@@ -62,17 +65,19 @@ class NestedNavHost extends NavHost {
       /// We use [page] as key for [_nestedNavigationHosts],
       /// so navigationHost == null means that [page] is not root page
       if (navigationHost == null && _nestedHost != null) {
-        _nestedNavigationHosts[_nestedHost!]!.push(pageConfig);
+        var navigateForResult = _nestedNavigationHosts[_nestedHost!]!
+            .navigateForResult<T>(pageConfig);
+        notifyListeners();
+        return navigateForResult;
       } else {
-        _addNewPage(pageConfig: pageConfig, replace: replace);
+        return _addNewPage(pageConfig: pageConfig, replace: replace);
       }
     } else {
-      _addNewPage(pageConfig: pageConfig, replace: replace);
+      return _addNewPage(pageConfig: pageConfig, replace: replace);
     }
-    notifyListeners();
   }
 
-  void _addNewPage({
+  Future<T?> _addNewPage<T>({
     required PageConfiguration pageConfig,
     bool replace = false,
   }) {
@@ -84,10 +89,13 @@ class NestedNavHost extends NavHost {
       if (pageIndex >= 0) {
         currentPages.removeRange(pageIndex, currentPages.length);
       }
-
       currentPages.add(newPage);
-    } else if (!currentPages.any((element) => element.name == newPage.name)) {
+    } else if (currentPages.every((element) => element.name != newPage.name)) {
       currentPages.add(newPage);
     }
+    final resultCompleter = Completer<T?>();
+    resultCompleters[newPage] = resultCompleter;
+    notifyListeners();
+    return resultCompleter.future;
   }
 }

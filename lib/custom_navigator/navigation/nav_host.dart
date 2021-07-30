@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:navigator_example/custom_navigator/navigation/pages.dart';
 import 'package:provider/provider.dart';
@@ -25,6 +27,8 @@ abstract class NavHost extends ChangeNotifier {
   final Pages rootPage;
   final _navigatorKey;
 
+  Map<Page,Completer<Object?>> resultCompleters = {};
+
   ///
   /// Stack of pages to be shown in [Navigator]
   ///
@@ -46,21 +50,36 @@ abstract class NavHost extends ChangeNotifier {
 
   void registerNestedNavHost(Pages rootPage);
 
-  void pop();
+  void pop({Object? result});
 
-  void push(
+  
+  void navigate(
+    PageConfiguration page, {
+    bool rootNavigator = false,
+    bool fullscreenDialog = false,
+    bool replace = false,
+  }) async {
+    await navigateForResult(
+      page,
+      rootNavigator: rootNavigator,
+      fullscreenDialog: fullscreenDialog,
+      replace: replace,
+    );
+  }
+
+  Future<T?> navigateForResult<T>(
     PageConfiguration page, {
     bool rootNavigator = false,
     bool fullscreenDialog = false,
     bool replace = false,
   });
 
-  void pushPage(
+  void navigateToPage(
     Pages page, {
     bool rootNavigator = false,
     bool fullscreenDialog = false,
   }) {
-    push(
+    navigate(
       PageConfiguration(uiPage: page),
       rootNavigator: rootNavigator,
       fullscreenDialog: fullscreenDialog,

@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:navigator_example/custom_navigator/navigation/page_nested_navigation_state.dart';
 import 'package:navigator_example/custom_navigator/navigation/pages.dart';
@@ -46,37 +48,47 @@ class RootNavHost extends NavHost {
   }
 
   @override
-  void pop() {
+  void pop({Object? result}) {
     if (nestedNavHost != null && nestedNavHost!.pages.length > 1) {
-      nestedNavHost!.pop();
+      nestedNavHost!.pop(result: result);
     } else {
-      if (currentPages.length > 1) currentPages.removeLast();
+      if (currentPages.length > 1) {
+        final page = currentPages.removeLast();
+        resultCompleters.remove(page)?.complete(result);
+      }
     }
     notifyListeners();
   }
 
+ 
+
   @override
-  void push(
+  Future<T?> navigateForResult<T>(
     PageConfiguration pageConfig, {
     bool rootNavigator = false,
     bool fullscreenDialog = false,
     bool replace = false,
-  }) {
-    print('push');
+  }) async {
     if (pageConfig.uiPage == rootPage && currentPages.isNotEmpty) {
-      return;
+      return null;
     }
 
     var navigationState = _pageNestedNavigationHosts[currentPages.last];
     if (!rootNavigator && navigationState!.nestedNavHost != null) {
-      navigationState.push(pageConfig, replace: replace);
+      var navigateForResult = navigationState.navigateForResult<T>(pageConfig, replace: replace);
+      notifyListeners();
+      return navigateForResult;
     } else {
       var newPage = getPage(pageConfig, fullscreenDialog: fullscreenDialog);
       if (newPage.name != currentPages.last.name) {
         currentPages.add(newPage);
+        final resultCompleter = Completer<T?>();
+        resultCompleters[newPage] = resultCompleter;
+        notifyListeners();
+        return resultCompleter.future;
       }
     }
 
-    notifyListeners();
+    
   }
 }

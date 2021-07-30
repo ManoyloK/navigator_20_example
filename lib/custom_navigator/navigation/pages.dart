@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:navigator_example/custom_navigator/navigation/page_configuration.dart';
 import 'package:navigator_example/custom_navigator/ui/about.dart';
+import 'package:navigator_example/custom_navigator/ui/details.dart';
 import 'package:navigator_example/custom_navigator/ui/home.dart';
 import 'package:navigator_example/custom_navigator/ui/main_screen.dart';
 
@@ -46,34 +47,7 @@ Page getPage(PageConfiguration pageConfig, {bool fullscreenDialog = false}) {
       );
     case Pages.details:
       return MaterialPage(
-        child: Scaffold(
-          body: Center(
-            child: Builder(
-              builder: (BuildContext context) {
-                return Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    MaterialButton(
-                      color: Colors.cyan,
-                      onPressed: () {
-                        TheAppRouterDelegate.pageManager
-                            .pushPage(Pages.details2, rootNavigator: true);
-                      },
-                      child: Text('Open details from root'),
-                    ),
-                    MaterialButton(
-                      color: Colors.cyan,
-                      onPressed: () {
-                        TheAppRouterDelegate.pageManager.pop();
-                      },
-                      child: Text('back'),
-                    ),
-                  ],
-                );
-              },
-            ),
-          ),
-        ),
+        child: Details(),
         key: ValueKey('/details'),
         name: '/details',
         restorationId: '/details',
@@ -86,11 +60,11 @@ Page getPage(PageConfiguration pageConfig, {bool fullscreenDialog = false}) {
               return Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Text('Details'),
+                  Text('Details 2'),
                   MaterialButton(
                     color: Colors.cyan,
                     onPressed: () {
-                      TheAppRouterDelegate.pageManager.pop();
+                      TheAppRouterDelegate.pageManager.pop(result:'details 2' );
                     },
                     child: Text('back'),
                   ),
@@ -120,6 +94,7 @@ Page getPage(PageConfiguration pageConfig, {bool fullscreenDialog = false}) {
       );
   }
 }
+
 
 class ModalBottomSheetDialog<T> extends Page<T> {
   const ModalBottomSheetDialog({

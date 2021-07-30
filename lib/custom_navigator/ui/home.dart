@@ -18,7 +18,7 @@ class HomeScreen extends StatelessWidget {
             MaterialButton(
               color: Colors.cyan,
               onPressed: () {
-                RootNavHost.of(context).pushPage(Pages.details);
+                RootNavHost.of(context).navigateToPage(Pages.details);
               },
               child: Text('Open Details'),
             ),

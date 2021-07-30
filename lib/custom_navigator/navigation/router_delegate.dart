@@ -67,13 +67,13 @@ class TheAppRouterDelegate extends RouterDelegate<PageConfiguration>
 
   @override
   Future<void> setNewRoutePath(PageConfiguration configuration) async {
-    pageManager.push(configuration);
+    pageManager.navigate(configuration);
   }
 
   void _parseDeepLink(Uri? uri) {
     if (uri != null) {
       final pages = DeepLinkParser.parse(uri);
-      pages.forEach((element) => pageManager.push(
+      pages.forEach((element) => pageManager.navigate(
             element,
             replace: true,
           ));

@@ -18,9 +18,9 @@ class _MainScreenState extends State<MainScreen> {
     setState(() {
       _index = index;
       if (_index == 0) {
-        RootNavHost.of(context).pushPage(Pages.home);
+        RootNavHost.of(context).navigateToPage(Pages.home);
       } else {
-        RootNavHost.of(context).pushPage(Pages.about);
+        RootNavHost.of(context).navigateToPage(Pages.about);
       }
     });
   }
