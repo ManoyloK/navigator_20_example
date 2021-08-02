@@ -23,35 +23,31 @@ class RootNavigationWidget extends StatefulWidget {
 }
 
 class _RootNavigationWidgetState extends State<RootNavigationWidget> {
-  ///
   /// Needed to point to the right [navHost] when new page pushes as global
   /// navigation and root [navHost] updates
-  ///
-  Page? page;
+  Page? _page;
 
   @override
   void initState() {
     super.initState();
     widget.roots.forEach(widget.navHost.registerNestedNavHost);
-    page = widget.navHost.pages.last;
+    _page = widget.navHost.pages.last;
   }
 
   @override
   Widget build(BuildContext context) {
     return Consumer<RootNavHost>(
       builder: (context, pageManager, child) {
-        ///
         ///  Use [Stack] with [Offstage] instead of [IndexedStack] because
         ///  [IndexedStack] keep tracking children semantics, so they are
         ///  tappable even if they are not visible. [Offstage] creates only
         ///  [Element] for widget
-        ///
         return Stack(
           children: [
-            ...pageManager.pageNestedNavigationHosts[page!]!.nestedNavigationHosts.map((navHost) {
+            ...pageManager.pageNestedNavigationHosts[_page!]!.nestedNavigationHosts.map((navHost) {
               return _OffstageNavigator(
                 navHost: navHost,
-                nestedNavHost: pageManager.pageNestedNavigationHosts[page!]!.nestedNavHost!,
+                nestedNavHost: pageManager.pageNestedNavigationHosts[_page!]!.nestedNavHost!,
               );
             })
           ],

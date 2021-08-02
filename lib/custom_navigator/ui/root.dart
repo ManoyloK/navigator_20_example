@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 class Root extends StatefulWidget {
   Root(this.pageManager);
   final RootNavHost pageManager;
+
   @override
   _RootState createState() => _RootState();
 }

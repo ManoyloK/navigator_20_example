@@ -44,7 +44,7 @@ class NestedNavHost extends NavHost {
         _nestedHost = _nestedNavigationHosts.keys.last;
       }
     } else {
-      final page = currentPages.removeLast();
+      final page = pagesInternal.removeLast();
       resultCompleters.remove(page)?.complete(result);
     }
     notifyListeners();
@@ -83,13 +83,13 @@ class NestedNavHost extends NavHost {
     var newPage = getPage(pageConfig);
 
     if (replace) {
-      final pageIndex = currentPages.indexWhere((element) => element.name == newPage.name);
+      final pageIndex = pagesInternal.indexWhere((element) => element.name == newPage.name);
       if (pageIndex >= 0) {
-        currentPages.removeRange(pageIndex, currentPages.length);
+        pagesInternal.removeRange(pageIndex, pagesInternal.length);
       }
-      currentPages.add(newPage);
-    } else if (currentPages.every((element) => element.name != newPage.name)) {
-      currentPages.add(newPage);
+      pagesInternal.add(newPage);
+    } else if (pagesInternal.every((element) => element.name != newPage.name)) {
+      pagesInternal.add(newPage);
     }
     final resultCompleter = Completer<T?>();
     resultCompleters[newPage] = resultCompleter;

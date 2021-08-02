@@ -28,18 +28,18 @@ class RootNavHost extends NavHost {
   Map<Page, PageNestedNavigationState> get pageNestedNavigationHosts => _pageNestedNavigationHosts;
 
   @override
-  NavHost? get nestedNavHost => _pageNestedNavigationHosts[currentPages.last]?.nestedNavHost;
+  NavHost? get nestedNavHost => _pageNestedNavigationHosts[pagesInternal.last]?.nestedNavHost;
 
   @override
-  List<NavHost> get nestedNavigationHosts =>
-      List.unmodifiable(_pageNestedNavigationHosts[currentPages.last]?.nestedNavigationHosts ?? []);
+  List<NavHost> get nestedNavigationHosts => List.unmodifiable(
+      _pageNestedNavigationHosts[pagesInternal.last]?.nestedNavigationHosts ?? []);
 
   @override
   void registerNestedNavHost(PageName rootPage) {
-    if (_pageNestedNavigationHosts[currentPages.last] == null) {
-      _pageNestedNavigationHosts[currentPages.last] = PageNestedNavigationState();
+    if (_pageNestedNavigationHosts[pagesInternal.last] == null) {
+      _pageNestedNavigationHosts[pagesInternal.last] = PageNestedNavigationState();
     }
-    _pageNestedNavigationHosts[currentPages.last]!.registerNestedNavHost(rootPage);
+    _pageNestedNavigationHosts[pagesInternal.last]!.registerNestedNavHost(rootPage);
   }
 
   @override
@@ -47,8 +47,8 @@ class RootNavHost extends NavHost {
     if (nestedNavHost != null && nestedNavHost!.pages.length > 1) {
       nestedNavHost!.pop(result: result);
     } else {
-      if (currentPages.length > 1) {
-        final page = currentPages.removeLast();
+      if (pagesInternal.length > 1) {
+        final page = pagesInternal.removeLast();
         resultCompleters.remove(page)?.complete(result);
       }
     }
@@ -62,19 +62,19 @@ class RootNavHost extends NavHost {
     bool fullscreenDialog = false,
     bool replace = false,
   }) async {
-    if (pageConfig.uiPage == rootPage && currentPages.isNotEmpty) {
+    if (pageConfig.uiPage == rootPage && pagesInternal.isNotEmpty) {
       return null;
     }
 
-    var navigationState = _pageNestedNavigationHosts[currentPages.last];
+    var navigationState = _pageNestedNavigationHosts[pagesInternal.last];
     if (!rootNavigator && navigationState!.nestedNavHost != null) {
       var navigateForResult = navigationState.navigateForResult<T>(pageConfig, replace: replace);
       notifyListeners();
       return navigateForResult;
     } else {
       var newPage = getPage(pageConfig, fullscreenDialog: fullscreenDialog);
-      if (newPage.name != currentPages.last.name) {
-        currentPages.add(newPage);
+      if (newPage.name != pagesInternal.last.name) {
+        pagesInternal.add(newPage);
         final resultCompleter = Completer<T?>();
         resultCompleters[newPage] = resultCompleter;
         notifyListeners();

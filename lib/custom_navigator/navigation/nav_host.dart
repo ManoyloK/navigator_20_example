@@ -10,7 +10,7 @@ abstract class NavHost extends ChangeNotifier {
   NavHost({
     required this.rootPage,
     GlobalKey<NavigatorState>? navigatorKey,
-  })  : currentPages = [
+  })  : pagesInternal = [
           getPage(PageConfiguration(uiPage: rootPage)),
         ],
         _navigatorKey = navigatorKey ??
@@ -22,28 +22,24 @@ abstract class NavHost extends ChangeNotifier {
     return Provider.of<NavHost>(context, listen: false);
   }
 
-  @protected
-  final List<Page> currentPages;
   final PageName rootPage;
   final _navigatorKey;
 
+  @protected
   Map<Page, Completer<Object?>> resultCompleters = {};
 
-  ///
-  /// Stack of pages to be shown in [Navigator]
-  ///
-  List<Page> get pages => List.unmodifiable(currentPages);
+  @protected
+  final List<Page> pagesInternal;
 
-  ///
+  /// Stack of pages to be shown in [Navigator]
+  List<Page> get pages => List.unmodifiable(pagesInternal);
+
   /// Contains all available navigation direction for example if we have bottom
   /// navigation bar with 3 tabs it will contain 3 NavHost one per tab
-  ///
   List<NavHost> get nestedNavigationHosts;
 
-  ///
   /// Currently selected navigation host, responsible for which one of
   /// [nestedNavigationHosts] currently active active
-  ///
   NavHost? get nestedNavHost;
 
   GlobalKey<NavigatorState> get navigatorKey => _navigatorKey;
