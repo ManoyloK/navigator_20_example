@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 
 class Root extends StatefulWidget {
   Root(this.pageManager);
+
   final RootNavHost pageManager;
 
   @override
@@ -39,12 +40,21 @@ class _RootState extends State<Root> with WidgetsBindingObserver {
       value: widget.pageManager,
       child: Consumer<RootNavHost>(
         builder: (context, pageManager, child) {
-          return Navigator(
-            key: pageManager.navigatorKey,
-            reportsRouteUpdateToEngine: true,
-            onPopPage: _onPopPage,
-            pages: pageManager.pages,
-            restorationScopeId: 'root',
+          return SafeArea(
+            child: Column(
+              children: [
+                _NavStateLabel(),
+                Expanded(
+                  child: Navigator(
+                    key: pageManager.navigatorKey,
+                    reportsRouteUpdateToEngine: true,
+                    onPopPage: _onPopPage,
+                    pages: pageManager.pages,
+                    restorationScopeId: 'root',
+                  ),
+                ),
+              ],
+            ),
           );
         },
       ),
@@ -58,5 +68,31 @@ class _RootState extends State<Root> with WidgetsBindingObserver {
     widget.pageManager.pop();
 
     return true;
+  }
+}
+
+class _NavStateLabel extends StatelessWidget {
+  const _NavStateLabel({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Align(
+      alignment: Alignment.topLeft,
+      child: Consumer<RootNavHost>(
+        builder: (context, pageManager, _) {
+          return Material(
+            elevation: 2,
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(pageManager.navigationStack
+                  .map((e) => '${e.name}')
+                  .join('/')),
+            ),
+          );
+        },
+      ),
+    );
   }
 }

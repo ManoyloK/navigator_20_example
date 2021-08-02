@@ -24,16 +24,12 @@ Page getPage(PageConfiguration pageConfig, {bool fullscreenDialog = false}) {
     case PageName.root:
       return MaterialPage(
         child: MainScreen(),
-        key: ValueKey('/root'),
         name: '/root',
-        restorationId: '/root',
       );
     case PageName.home:
       return MaterialPage(
         child: HomeScreen(),
-        key: ValueKey('/home'),
-        name: '/home',
-        restorationId: '/home',
+        name: 'home',
       );
     case PageName.about:
       var tabIndex = pageConfig.settings as int? ?? 0;
@@ -41,38 +37,29 @@ Page getPage(PageConfiguration pageConfig, {bool fullscreenDialog = false}) {
         child: About(
           tabIndex: tabIndex,
         ),
-        key: ValueKey('/about'),
-        name: '/about',
-        restorationId: '/about',
+        name: 'about',
       );
     case PageName.details:
       return MaterialPage(
         child: Details(),
-        key: ValueKey('/details'),
-        name: '/details',
-        restorationId: '/details',
+        name: 'details',
       );
     case PageName.details2:
       return MaterialPage(
         child: Details2(),
-        key: ValueKey('/details2'),
-        name: '/details2',
-        restorationId: '/details2',
+        name: 'details2',
       );
     case PageName.dialog:
       return ModalBottomSheetDialog(
         builder: (context) => BaseDialog(),
-        key: ValueKey('/dialog'),
-        name: '/dialog',
+        name: 'dialog',
       );
     default:
       return MaterialPage(
         child: Container(
           color: Colors.amber,
         ),
-        key: ValueKey('/unknown'),
-        name: '/unknown',
-        restorationId: '/unknown',
+        name: 'unknown',
       );
   }
 }

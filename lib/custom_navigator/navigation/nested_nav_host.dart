@@ -26,7 +26,7 @@ class NestedNavHost extends NavHost {
   List<NestedNavHost> get nestedNavigationHosts => _nestedNavigationHosts.values.toList();
 
   @override
-  NestedNavHost? get nestedNavHost => _nestedNavigationHosts[_nestedHost!];
+  NestedNavHost? get nestedNavHost => _nestedNavigationHosts[_nestedHost];
 
   @override
   void registerNestedNavHost(PageName rootPage) {

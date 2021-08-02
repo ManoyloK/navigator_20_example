@@ -33,6 +33,13 @@ abstract class NavHost extends ChangeNotifier {
 
   /// Stack of pages to be shown in [Navigator]
   List<Page> get pages => List.unmodifiable(pagesInternal);
+  List<Page> get navigationStack {
+    return [
+      if(pagesInternal.isNotEmpty)
+      pagesInternal.last,
+      ...?nestedNavHost?.navigationStack,
+    ];
+  }
 
   /// Contains all available navigation direction for example if we have bottom
   /// navigation bar with 3 tabs it will contain 3 NavHost one per tab
