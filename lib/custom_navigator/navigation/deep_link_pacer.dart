@@ -5,14 +5,14 @@ import 'page_configuration.dart';
 class DeepLinkParser {
   static List<PageConfiguration> parse(Uri uri) {
     if (uri.pathSegments.isEmpty) {
-      return [PageConfiguration(uiPage: Pages.root)];
+      return [PageConfiguration(uiPage: PageName.root)];
     }
     final pages = <PageConfiguration>[];
 
     if (uri.pathSegments[0] == 'home') {
-      pages.add(PageConfiguration(uiPage: Pages.home));
+      pages.add(PageConfiguration(uiPage: PageName.home));
       if (uri.pathSegments.length > 1) {
-        pages.add(PageConfiguration(uiPage: Pages.details));
+        pages.add(PageConfiguration(uiPage: PageName.details));
       }
     }
     if (uri.pathSegments[0] == 'about') {
@@ -26,10 +26,10 @@ class DeepLinkParser {
           activeTab = 2;
         }
       }
-      pages.add(PageConfiguration(uiPage: Pages.about, settings: activeTab));
+      pages.add(PageConfiguration(uiPage: PageName.about, settings: activeTab));
       if (uri.pathSegments.length > 2 && uri.pathSegments[2] == 'details') {
         pages.add(PageConfiguration(
-          uiPage: Pages.details2,
+          uiPage: PageName.details2,
         ));
       }
     }

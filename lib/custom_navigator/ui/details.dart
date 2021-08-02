@@ -28,9 +28,8 @@ class _DetailsState extends State<Details> {
                 MaterialButton(
                   color: Colors.cyan,
                   onPressed: () async {
-                    result = await App.pageManager
-                        .navigateForResult(
-                      PageConfiguration(uiPage: Pages.details2),
+                    result = await App.pageManager.navigateForResult(
+                      PageConfiguration(uiPage: PageName.details2),
                       rootNavigator: true,
                     );
 
@@ -41,8 +40,7 @@ class _DetailsState extends State<Details> {
                 MaterialButton(
                   color: Colors.cyan,
                   onPressed: () {
-                    App.pageManager
-                        .pop(result: 'from details page');
+                    App.pageManager.pop(result: 'from details page');
                   },
                   child: Text('back'),
                 ),

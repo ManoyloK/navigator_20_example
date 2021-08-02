@@ -58,9 +58,8 @@ class _AboutState extends State<About> with SingleTickerProviderStateMixin {
                     MaterialButton(
                       color: Colors.cyan,
                       onPressed: () async {
-                        result = await App.pageManager
-                            .navigateForResult(
-                          PageConfiguration(uiPage: Pages.details),
+                        result = await App.pageManager.navigateForResult(
+                          PageConfiguration(uiPage: PageName.details),
                           rootNavigator: true,
                         );
                         setState(() {});
@@ -82,9 +81,8 @@ class _AboutState extends State<About> with SingleTickerProviderStateMixin {
                     MaterialButton(
                       color: Colors.cyan,
                       onPressed: () async {
-                         result = await App.pageManager
-                            .navigateForResult(
-                          PageConfiguration(uiPage: Pages.details),
+                        result = await App.pageManager.navigateForResult(
+                          PageConfiguration(uiPage: PageName.details),
                         );
                         setState(() {});
                       },
@@ -94,7 +92,7 @@ class _AboutState extends State<About> with SingleTickerProviderStateMixin {
                       color: Colors.cyan,
                       onPressed: () {
                         App.pageManager.navigateToPage(
-                          Pages.dialog,
+                          PageName.dialog,
                           rootNavigator: true,
                         );
                       },

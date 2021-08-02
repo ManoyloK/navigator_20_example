@@ -24,10 +24,10 @@ abstract class NavHost extends ChangeNotifier {
 
   @protected
   final List<Page> currentPages;
-  final Pages rootPage;
+  final PageName rootPage;
   final _navigatorKey;
 
-  Map<Page,Completer<Object?>> resultCompleters = {};
+  Map<Page, Completer<Object?>> resultCompleters = {};
 
   ///
   /// Stack of pages to be shown in [Navigator]
@@ -48,11 +48,10 @@ abstract class NavHost extends ChangeNotifier {
 
   GlobalKey<NavigatorState> get navigatorKey => _navigatorKey;
 
-  void registerNestedNavHost(Pages rootPage);
+  void registerNestedNavHost(PageName rootPage);
 
   void pop({Object? result});
 
-  
   void navigate(
     PageConfiguration page, {
     bool rootNavigator = false,
@@ -75,7 +74,7 @@ abstract class NavHost extends ChangeNotifier {
   });
 
   void navigateToPage(
-    Pages page, {
+    PageName page, {
     bool rootNavigator = false,
     bool fullscreenDialog = false,
   }) {

@@ -4,20 +4,19 @@ import 'package:navigator_example/custom_navigator/navigation/pages.dart';
 import 'nested_nav_host.dart';
 
 class PageNestedNavigationState {
-  Pages? nestedHost;
-  final Map<Pages, NestedNavHost> _nestedNavigationHosts = {};
+  PageName? nestedHost;
+  final Map<PageName, NestedNavHost> _nestedNavigationHosts = {};
 
   NestedNavHost? get nestedNavHost => _nestedNavigationHosts[nestedHost];
 
-  List<NestedNavHost> get nestedNavigationHosts =>
-      _nestedNavigationHosts.values.toList();
+  List<NestedNavHost> get nestedNavigationHosts => _nestedNavigationHosts.values.toList();
 
-  void registerNestedNavHost(Pages rootPage) {
+  void registerNestedNavHost(PageName rootPage) {
     nestedHost ??= rootPage;
     _nestedNavigationHosts[rootPage] = NestedNavHost(rootPage: rootPage);
   }
 
-  bool isRoot(Pages page) => _nestedNavigationHosts.keys.contains(page);
+  bool isRoot(PageName page) => _nestedNavigationHosts.keys.contains(page);
 
   Future<T?> navigateForResult<T>(
     PageConfiguration pageConfig, {

@@ -10,7 +10,7 @@ import 'page_configuration.dart';
 
 class RootNavHost extends NavHost {
   RootNavHost({
-    required Pages rootPage,
+    required PageName rootPage,
   }) : super(rootPage: rootPage);
 
   static RootNavHost of(BuildContext context) {
@@ -25,26 +25,21 @@ class RootNavHost extends NavHost {
   ///
   final Map<Page, PageNestedNavigationState> _pageNestedNavigationHosts = {};
 
-  Map<Page, PageNestedNavigationState> get pageNestedNavigationHosts =>
-      _pageNestedNavigationHosts;
+  Map<Page, PageNestedNavigationState> get pageNestedNavigationHosts => _pageNestedNavigationHosts;
 
   @override
-  NavHost? get nestedNavHost =>
-      _pageNestedNavigationHosts[currentPages.last]?.nestedNavHost;
+  NavHost? get nestedNavHost => _pageNestedNavigationHosts[currentPages.last]?.nestedNavHost;
 
   @override
-  List<NavHost> get nestedNavigationHosts => List.unmodifiable(
-      _pageNestedNavigationHosts[currentPages.last]?.nestedNavigationHosts ??
-          []);
+  List<NavHost> get nestedNavigationHosts =>
+      List.unmodifiable(_pageNestedNavigationHosts[currentPages.last]?.nestedNavigationHosts ?? []);
 
   @override
-  void registerNestedNavHost(Pages rootPage) {
+  void registerNestedNavHost(PageName rootPage) {
     if (_pageNestedNavigationHosts[currentPages.last] == null) {
-      _pageNestedNavigationHosts[currentPages.last] =
-          PageNestedNavigationState();
+      _pageNestedNavigationHosts[currentPages.last] = PageNestedNavigationState();
     }
-    _pageNestedNavigationHosts[currentPages.last]!
-        .registerNestedNavHost(rootPage);
+    _pageNestedNavigationHosts[currentPages.last]!.registerNestedNavHost(rootPage);
   }
 
   @override
@@ -59,8 +54,6 @@ class RootNavHost extends NavHost {
     }
     notifyListeners();
   }
-
- 
 
   @override
   Future<T?> navigateForResult<T>(
@@ -88,7 +81,5 @@ class RootNavHost extends NavHost {
         return resultCompleter.future;
       }
     }
-
-    
   }
 }

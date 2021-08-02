@@ -6,7 +6,7 @@ import 'navigation/root_nav_host.dart';
 
 class App extends StatelessWidget {
   static RootNavHost pageManager = RootNavHost(
-    rootPage: Pages.root,
+    rootPage: PageName.root,
   );
 
   @override

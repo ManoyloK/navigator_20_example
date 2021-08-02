@@ -8,5 +8,5 @@ class PageConfiguration {
 
   final Object? settings;
 
-  final Pages uiPage;
+  final PageName uiPage;
 }

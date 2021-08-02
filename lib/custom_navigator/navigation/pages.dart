@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
-import 'package:navigator_example/custom_navigator/app.dart';
 import 'package:navigator_example/custom_navigator/navigation/page_configuration.dart';
 import 'package:navigator_example/custom_navigator/ui/about.dart';
 import 'package:navigator_example/custom_navigator/ui/details.dart';
+import 'package:navigator_example/custom_navigator/ui/details_2.dart';
 import 'package:navigator_example/custom_navigator/ui/home.dart';
 import 'package:navigator_example/custom_navigator/ui/main_screen.dart';
 
 import '../ui/base_dialog.dart';
 
-enum Pages {
+enum PageName {
   root,
   home,
   about,
@@ -21,21 +21,21 @@ enum Pages {
 
 Page getPage(PageConfiguration pageConfig, {bool fullscreenDialog = false}) {
   switch (pageConfig.uiPage) {
-    case Pages.root:
+    case PageName.root:
       return MaterialPage(
         child: MainScreen(),
         key: ValueKey('/root'),
         name: '/root',
         restorationId: '/root',
       );
-    case Pages.home:
+    case PageName.home:
       return MaterialPage(
         child: HomeScreen(),
         key: ValueKey('/home'),
         name: '/home',
         restorationId: '/home',
       );
-    case Pages.about:
+    case PageName.about:
       var tabIndex = pageConfig.settings as int? ?? 0;
       return MaterialPage(
         child: About(
@@ -45,39 +45,21 @@ Page getPage(PageConfiguration pageConfig, {bool fullscreenDialog = false}) {
         name: '/about',
         restorationId: '/about',
       );
-    case Pages.details:
+    case PageName.details:
       return MaterialPage(
         child: Details(),
         key: ValueKey('/details'),
         name: '/details',
         restorationId: '/details',
       );
-    case Pages.details2:
+    case PageName.details2:
       return MaterialPage(
-        child: Scaffold(
-          body: Center(child: Builder(
-            builder: (BuildContext context) {
-              return Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Text('Details 2'),
-                  MaterialButton(
-                    color: Colors.cyan,
-                    onPressed: () {
-                      App.pageManager.pop(result:'details 2' );
-                    },
-                    child: Text('back'),
-                  ),
-                ],
-              );
-            },
-          )),
-        ),
+        child: Details2(),
         key: ValueKey('/details2'),
         name: '/details2',
         restorationId: '/details2',
       );
-    case Pages.dialog:
+    case PageName.dialog:
       return ModalBottomSheetDialog(
         builder: (context) => BaseDialog(),
         key: ValueKey('/dialog'),
@@ -94,7 +76,6 @@ Page getPage(PageConfiguration pageConfig, {bool fullscreenDialog = false}) {
       );
   }
 }
-
 
 class ModalBottomSheetDialog<T> extends Page<T> {
   const ModalBottomSheetDialog({

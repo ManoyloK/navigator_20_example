@@ -15,7 +15,7 @@ class RootNavigationWidget extends StatefulWidget {
     this.roots = const [],
     required this.navHost,
   }) : super(key: key);
-  final List<Pages> roots;
+  final List<PageName> roots;
   final RootNavHost navHost;
 
   @override

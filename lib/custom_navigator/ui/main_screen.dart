@@ -18,9 +18,9 @@ class _MainScreenState extends State<MainScreen> {
     setState(() {
       _index = index;
       if (_index == 0) {
-        RootNavHost.of(context).navigateToPage(Pages.home);
+        RootNavHost.of(context).navigateToPage(PageName.home);
       } else {
-        RootNavHost.of(context).navigateToPage(Pages.about);
+        RootNavHost.of(context).navigateToPage(PageName.about);
       }
     });
   }
@@ -45,7 +45,7 @@ class _MainScreenState extends State<MainScreen> {
         ),
         body: RootNavigationWidget(
           navHost: RootNavHost.of(context),
-          roots: [Pages.home, Pages.about],
+          roots: [PageName.home, PageName.about],
         ),
       ),
     );
