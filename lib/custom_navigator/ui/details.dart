@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:navigator_example/custom_navigator/app.dart';
 import 'package:navigator_example/custom_navigator/navigation/page_configuration.dart';
 
 import '../navigation/pages.dart';
-import '../navigation/router_delegate.dart';
 
 class Details extends StatefulWidget {
   const Details({
@@ -28,7 +28,7 @@ class _DetailsState extends State<Details> {
                 MaterialButton(
                   color: Colors.cyan,
                   onPressed: () async {
-                    result = await TheAppRouterDelegate.pageManager
+                    result = await App.pageManager
                         .navigateForResult(
                       PageConfiguration(uiPage: Pages.details2),
                       rootNavigator: true,
@@ -41,7 +41,7 @@ class _DetailsState extends State<Details> {
                 MaterialButton(
                   color: Colors.cyan,
                   onPressed: () {
-                    TheAppRouterDelegate.pageManager
+                    App.pageManager
                         .pop(result: 'from details page');
                   },
                   child: Text('back'),

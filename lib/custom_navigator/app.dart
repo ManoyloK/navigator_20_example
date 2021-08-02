@@ -1,34 +1,25 @@
 import 'package:flutter/material.dart';
-import 'package:navigator_example/custom_navigator/navigation/page_configuration.dart';
 import 'package:navigator_example/custom_navigator/navigation/pages.dart';
-import 'package:navigator_example/custom_navigator/navigation/route_information_parser.dart';
-import 'package:navigator_example/custom_navigator/navigation/router_delegate.dart';
+import 'package:navigator_example/custom_navigator/ui/root.dart';
 
-class TheApp extends StatefulWidget {
-  TheApp() {
-    ///
-    /// Needed to restore app state after it goes foreground
-    ///
-    TheAppRouterDelegate.pageManager.navigate(PageConfiguration(uiPage: Pages.root));
-  }
+import 'navigation/root_nav_host.dart';
 
-  @override
-  _TheAppState createState() => _TheAppState();
-}
+class App extends StatelessWidget {
+  static RootNavHost pageManager = RootNavHost(
+    rootPage: Pages.root,
+  );
 
-class _TheAppState extends State<TheApp> {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp.router(
+    return MaterialApp(
       title: 'Flutter Router Demo',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      routerDelegate: TheAppRouterDelegate(),
-      routeInformationParser: TheAppRouteInformationParser(),
       restorationScopeId: 'app',
+      home: Root(pageManager),
     );
   }
 }

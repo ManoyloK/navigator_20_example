@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:navigator_example/custom_navigator/app.dart';
 import 'package:navigator_example/custom_navigator/navigation/page_configuration.dart';
 import 'package:navigator_example/custom_navigator/navigation/pages.dart';
-import 'package:navigator_example/custom_navigator/navigation/router_delegate.dart';
 
 class About extends StatefulWidget {
   const About({
@@ -58,7 +58,7 @@ class _AboutState extends State<About> with SingleTickerProviderStateMixin {
                     MaterialButton(
                       color: Colors.cyan,
                       onPressed: () async {
-                        result = await TheAppRouterDelegate.pageManager
+                        result = await App.pageManager
                             .navigateForResult(
                           PageConfiguration(uiPage: Pages.details),
                           rootNavigator: true,
@@ -82,7 +82,7 @@ class _AboutState extends State<About> with SingleTickerProviderStateMixin {
                     MaterialButton(
                       color: Colors.cyan,
                       onPressed: () async {
-                         result = await TheAppRouterDelegate.pageManager
+                         result = await App.pageManager
                             .navigateForResult(
                           PageConfiguration(uiPage: Pages.details),
                         );
@@ -93,7 +93,7 @@ class _AboutState extends State<About> with SingleTickerProviderStateMixin {
                     MaterialButton(
                       color: Colors.cyan,
                       onPressed: () {
-                        TheAppRouterDelegate.pageManager.navigateToPage(
+                        App.pageManager.navigateToPage(
                           Pages.dialog,
                           rootNavigator: true,
                         );

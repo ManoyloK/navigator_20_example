@@ -8,7 +8,8 @@
             "name": "Flutter main",
             "program": "lib/main.dart",
             "request": "launch",
-            "type": "dart"
+            "type": "dart",
+            "flutterMode": "debug"
         },
     ]
 }

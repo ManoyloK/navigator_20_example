@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
+import 'package:navigator_example/custom_navigator/app.dart';
 import 'package:navigator_example/custom_navigator/navigation/page_configuration.dart';
 import 'package:navigator_example/custom_navigator/ui/about.dart';
 import 'package:navigator_example/custom_navigator/ui/details.dart';
@@ -7,7 +8,6 @@ import 'package:navigator_example/custom_navigator/ui/home.dart';
 import 'package:navigator_example/custom_navigator/ui/main_screen.dart';
 
 import '../ui/base_dialog.dart';
-import 'router_delegate.dart';
 
 enum Pages {
   root,
@@ -64,7 +64,7 @@ Page getPage(PageConfiguration pageConfig, {bool fullscreenDialog = false}) {
                   MaterialButton(
                     color: Colors.cyan,
                     onPressed: () {
-                      TheAppRouterDelegate.pageManager.pop(result:'details 2' );
+                      App.pageManager.pop(result:'details 2' );
                     },
                     child: Text('back'),
                   ),
