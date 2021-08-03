@@ -25,6 +25,9 @@ class _AboutState extends State<About> with SingleTickerProviderStateMixin {
       length: 3,
       initialIndex: widget.tabIndex ?? 0,
     );
+    _tabController!.addListener(() { 
+      _openTab(_tabController!.index);
+    });
   }
 
   @override
@@ -34,6 +37,13 @@ class _AboutState extends State<About> with SingleTickerProviderStateMixin {
       result = null;
       _tabController!.animateTo(widget.tabIndex!);
     }
+  }
+
+  void _openTab(int index) {
+    App.pageManager.navigate(PageConfiguration(
+      uiPage: PageName.about,
+      settings: index,
+    ));
   }
 
   @override
@@ -83,6 +93,8 @@ class _AboutState extends State<About> with SingleTickerProviderStateMixin {
                       onPressed: () async {
                         result = await App.pageManager.navigateForResult(
                           PageConfiguration(uiPage: PageName.details),
+                          replace: true,
+                          keepNavigationStack: true,
                         );
                         setState(() {});
                       },
@@ -107,7 +119,7 @@ class _AboutState extends State<About> with SingleTickerProviderStateMixin {
         TabBar(
           onTap: (index) {
             result = null;
-            _tabController!.animateTo(index);
+            _openTab(index);
           },
           labelPadding: const EdgeInsets.fromLTRB(16.0, 4.0, 16.0, 0.0),
           indicator: const BoxDecoration(),

@@ -9,7 +9,8 @@ class PageNestedNavigationState {
 
   NestedNavHost? get nestedNavHost => _nestedNavigationHosts[nestedHost];
 
-  List<NestedNavHost> get nestedNavigationHosts => _nestedNavigationHosts.values.toList();
+  List<NestedNavHost> get nestedNavigationHosts =>
+      _nestedNavigationHosts.values.toList();
 
   void registerNestedNavHost(PageName rootPage) {
     nestedHost ??= rootPage;
@@ -21,10 +22,15 @@ class PageNestedNavigationState {
   Future<T?> navigateForResult<T>(
     PageConfiguration pageConfig, {
     bool replace = false,
+    bool keepNavigationStack = false,
   }) {
     if (isRoot(pageConfig.uiPage)) {
       nestedHost = pageConfig.uiPage;
     }
-    return nestedNavHost!.navigateForResult(pageConfig, replace: replace);
+    return nestedNavHost!.navigateForResult(
+      pageConfig,
+      replace: replace,
+      keepNavigationStack: keepNavigationStack,
+    );
   }
 }

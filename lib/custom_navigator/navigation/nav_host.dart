@@ -24,6 +24,7 @@ abstract class NavHost extends ChangeNotifier {
 
   final PageName rootPage;
   final _navigatorKey;
+  bool keepNavigationStack = false;
 
   @protected
   Map<Page, Completer<Object?>> resultCompleters = {};
@@ -35,8 +36,11 @@ abstract class NavHost extends ChangeNotifier {
   List<Page> get pages => List.unmodifiable(pagesInternal);
   List<Page> get navigationStack {
     return [
-      if(pagesInternal.isNotEmpty)
-      pagesInternal.last,
+      if (keepNavigationStack && pagesInternal.length > 1) ...{
+        pagesInternal[pagesInternal.length - 2],
+        ...?rootNavHost?.navigationStack,
+      },
+      if (pagesInternal.isNotEmpty) pagesInternal.last,
       ...?nestedNavHost?.navigationStack,
     ];
   }
@@ -49,6 +53,8 @@ abstract class NavHost extends ChangeNotifier {
   /// [nestedNavigationHosts] currently active active
   NavHost? get nestedNavHost;
 
+  NavHost? get rootNavHost;
+
   GlobalKey<NavigatorState> get navigatorKey => _navigatorKey;
 
   void registerNestedNavHost(PageName rootPage);
@@ -60,12 +66,14 @@ abstract class NavHost extends ChangeNotifier {
     bool rootNavigator = false,
     bool fullscreenDialog = false,
     bool replace = false,
+    bool keepNavigationStack = false,
   }) async {
     await navigateForResult(
       page,
       rootNavigator: rootNavigator,
       fullscreenDialog: fullscreenDialog,
       replace: replace,
+      keepNavigationStack: keepNavigationStack,
     );
   }
 
@@ -74,17 +82,20 @@ abstract class NavHost extends ChangeNotifier {
     bool rootNavigator = false,
     bool fullscreenDialog = false,
     bool replace = false,
+    bool keepNavigationStack = false,
   });
 
   void navigateToPage(
     PageName page, {
     bool rootNavigator = false,
     bool fullscreenDialog = false,
+    bool keepNavigationStack = false,
   }) {
     navigate(
       PageConfiguration(uiPage: page),
       rootNavigator: rootNavigator,
       fullscreenDialog: fullscreenDialog,
+      keepNavigationStack: keepNavigationStack,
     );
   }
 }

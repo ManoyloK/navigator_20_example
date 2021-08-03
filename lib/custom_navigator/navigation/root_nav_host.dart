@@ -25,21 +25,30 @@ class RootNavHost extends NavHost {
   ///
   final Map<Page, PageNestedNavigationState> _pageNestedNavigationHosts = {};
 
-  Map<Page, PageNestedNavigationState> get pageNestedNavigationHosts => _pageNestedNavigationHosts;
+  Map<Page, PageNestedNavigationState> get pageNestedNavigationHosts =>
+      _pageNestedNavigationHosts;
 
   @override
-  NavHost? get nestedNavHost => _pageNestedNavigationHosts[pagesInternal.last]?.nestedNavHost;
+  NavHost? get nestedNavHost =>
+      _pageNestedNavigationHosts[pagesInternal.last]?.nestedNavHost;
+
+  @override
+  NavHost? get rootNavHost =>
+      _pageNestedNavigationHosts[rootPage]?.nestedNavHost;
 
   @override
   List<NavHost> get nestedNavigationHosts => List.unmodifiable(
-      _pageNestedNavigationHosts[pagesInternal.last]?.nestedNavigationHosts ?? []);
+      _pageNestedNavigationHosts[pagesInternal.last]?.nestedNavigationHosts ??
+          []);
 
   @override
   void registerNestedNavHost(PageName rootPage) {
     if (_pageNestedNavigationHosts[pagesInternal.last] == null) {
-      _pageNestedNavigationHosts[pagesInternal.last] = PageNestedNavigationState();
+      _pageNestedNavigationHosts[pagesInternal.last] =
+          PageNestedNavigationState();
     }
-    _pageNestedNavigationHosts[pagesInternal.last]!.registerNestedNavHost(rootPage);
+    _pageNestedNavigationHosts[pagesInternal.last]!
+        .registerNestedNavHost(rootPage);
   }
 
   @override
@@ -48,6 +57,7 @@ class RootNavHost extends NavHost {
       nestedNavHost!.pop(result: result);
     } else {
       if (pagesInternal.length > 1) {
+        keepNavigationStack = false;
         final page = pagesInternal.removeLast();
         resultCompleters.remove(page)?.complete(result);
       }
@@ -61,6 +71,7 @@ class RootNavHost extends NavHost {
     bool rootNavigator = false,
     bool fullscreenDialog = false,
     bool replace = false,
+    bool keepNavigationStack = false,
   }) async {
     if (pageConfig.uiPage == rootPage && pagesInternal.isNotEmpty) {
       return null;
@@ -68,12 +79,17 @@ class RootNavHost extends NavHost {
 
     var navigationState = _pageNestedNavigationHosts[pagesInternal.last];
     if (!rootNavigator && navigationState!.nestedNavHost != null) {
-      var navigateForResult = navigationState.navigateForResult<T>(pageConfig, replace: replace);
+      var navigateForResult = navigationState.navigateForResult<T>(
+        pageConfig,
+        replace: replace,
+        keepNavigationStack: keepNavigationStack,
+      );
       notifyListeners();
       return navigateForResult;
     } else {
       var newPage = getPage(pageConfig, fullscreenDialog: fullscreenDialog);
       if (newPage.name != pagesInternal.last.name) {
+        this.keepNavigationStack = keepNavigationStack;
         pagesInternal.add(newPage);
         final resultCompleter = Completer<T?>();
         resultCompleters[newPage] = resultCompleter;

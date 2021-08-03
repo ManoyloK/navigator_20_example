@@ -23,10 +23,14 @@ class NestedNavHost extends NavHost {
   final Map<PageName, NestedNavHost> _nestedNavigationHosts = {};
 
   @override
-  List<NestedNavHost> get nestedNavigationHosts => _nestedNavigationHosts.values.toList();
+  List<NestedNavHost> get nestedNavigationHosts =>
+      _nestedNavigationHosts.values.toList();
 
   @override
   NestedNavHost? get nestedNavHost => _nestedNavigationHosts[_nestedHost];
+
+  @override
+  NestedNavHost? get rootNavHost => _nestedNavigationHosts[rootPage];
 
   @override
   void registerNestedNavHost(PageName rootPage) {
@@ -44,6 +48,7 @@ class NestedNavHost extends NavHost {
         _nestedHost = _nestedNavigationHosts.keys.last;
       }
     } else {
+      keepNavigationStack = false;
       final page = pagesInternal.removeLast();
       resultCompleters.remove(page)?.complete(result);
     }
@@ -56,6 +61,7 @@ class NestedNavHost extends NavHost {
     bool rootNavigator = false,
     bool fullscreenDialog = false,
     bool replace = false,
+    bool keepNavigationStack = false,
   }) async {
     if (pageConfig.uiPage != rootPage) {
       var navigationHost = _nestedNavigationHosts[pageConfig.uiPage];
@@ -65,11 +71,18 @@ class NestedNavHost extends NavHost {
       /// so navigationHost == null means that [page] is not root page
       if (navigationHost == null && _nestedHost != null) {
         var navigateForResult =
-            _nestedNavigationHosts[_nestedHost!]!.navigateForResult<T>(pageConfig);
+            _nestedNavigationHosts[_nestedHost!]!.navigateForResult<T>(
+          pageConfig,
+          keepNavigationStack: keepNavigationStack,
+        );
         notifyListeners();
         return navigateForResult;
       } else {
-        return _addNewPage(pageConfig: pageConfig, replace: replace);
+        return _addNewPage(
+          pageConfig: pageConfig,
+          replace: replace,
+          keepNavigationStack: keepNavigationStack,
+        );
       }
     } else {
       return _addNewPage(pageConfig: pageConfig, replace: replace);
@@ -79,11 +92,14 @@ class NestedNavHost extends NavHost {
   Future<T?> _addNewPage<T>({
     required PageConfiguration pageConfig,
     bool replace = false,
+    bool keepNavigationStack = false,
   }) {
+    this.keepNavigationStack = keepNavigationStack;
     var newPage = getPage(pageConfig);
 
     if (replace) {
-      final pageIndex = pagesInternal.indexWhere((element) => element.name == newPage.name);
+      final pageIndex =
+          pagesInternal.indexWhere((element) => element.name == newPage.name);
       if (pageIndex >= 0) {
         pagesInternal.removeRange(pageIndex, pagesInternal.length);
       }

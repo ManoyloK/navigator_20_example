@@ -37,7 +37,7 @@ Page getPage(PageConfiguration pageConfig, {bool fullscreenDialog = false}) {
         child: About(
           tabIndex: tabIndex,
         ),
-        name: 'about',
+        name: 'about/${_getTabPage(tabIndex)}',
       );
     case PageName.details:
       return MaterialPage(
@@ -61,6 +61,14 @@ Page getPage(PageConfiguration pageConfig, {bool fullscreenDialog = false}) {
         ),
         name: 'unknown',
       );
+  }
+}
+
+String _getTabPage(index) {
+  switch(index){
+    case 1: return 'b';
+    case 2: return 'c';
+    default: return 'a';
   }
 }
 
